@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:chat_app/constants/strings.dart';
+import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,21 +30,37 @@ class AuthMethods {
 
     DocumentSnapshot documentSnapshot =
         await _userCollection.document(currentUser.uid).get();
-
     return User.fromMap(documentSnapshot.data);
   }
 
+  Future<User> getUserDetailsById(id) async {
+    try {
+      DocumentSnapshot documentSnapshot =
+          await _userCollection.document(id).get();
+      return User.fromMap(documentSnapshot.data);
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
   Future<FirebaseUser> signIn() async {
-    GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
-    GoogleSignInAuthentication _signInAuthentication =
-        await _signInAccount.authentication;
+    try {
+      GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
+      GoogleSignInAuthentication _signInAuthentication =
+          await _signInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: _signInAuthentication.accessToken,
-        idToken: _signInAuthentication.idToken);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: _signInAuthentication.accessToken,
+          idToken: _signInAuthentication.idToken);
 
-    FirebaseUser user = await _auth.signInWithCredential(credential);
-    return user;
+      FirebaseUser user = await _auth.signInWithCredential(credential);
+      return user;
+    } catch (e) {
+      print("Auth methods error");
+      print(e);
+      return null;
+    }
   }
 
   Future<bool> authenticateUser(FirebaseUser user) async {
@@ -86,8 +104,25 @@ class AuthMethods {
     return userList;
   }
 
-  Future<void> signOut() async {
-    await _googleSignIn.signOut();
-    return await _auth.signOut();
+  Future<bool> signOut() async {
+    try {
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
+
+  void setUserState({@required String userId, @required UserState userState}) {
+    int stateNum = Utils.stateToNum(userState);
+
+    _userCollection.document(userId).updateData({
+      "state": stateNum,
+    });
+  }
+
+  Stream<DocumentSnapshot> getUserStream({@required String uid}) =>
+      _userCollection.document(uid).snapshots();
 }
