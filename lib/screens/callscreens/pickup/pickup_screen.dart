@@ -57,7 +57,7 @@ class _PickupScreenState extends State<PickupScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Incoming...",
+              "Đang gọi...",
               style: TextStyle(
                 fontSize: 30,
               ),

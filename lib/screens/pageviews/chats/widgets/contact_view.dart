@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chat_app/models/contact.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/user_provider.dart';
@@ -7,10 +6,10 @@ import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/screens/chatscreens/chat_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
+import 'package:chat_app/screens/pageviews/chats/widgets/last_message_container.dart';
+import 'package:chat_app/widgets/online_dot_indicator.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
-
-import 'last_message_container.dart';
-import 'online_dot_indicator.dart';
+import 'package:provider/provider.dart';
 
 class ContactView extends StatelessWidget {
   final Contact contact;

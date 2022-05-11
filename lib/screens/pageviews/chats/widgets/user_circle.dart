@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chat_app/provider/user_provider.dart';
-import 'package:chat_app/utils/universal_variables.dart';
+import 'package:chat_app/screens/pageviews/chats/widgets/user_details_container.dart';
 import 'package:chat_app/utils/utilities.dart';
-
-import 'user_details_container.dart';
+import 'package:chat_app/utils/universal_variables.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class UserCircle extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class UserCircle extends StatelessWidget {
       ),
       child: Container(
         height: 40,
-        width: 40,
+        width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: UniversalVariables.separatorColor,
@@ -29,13 +29,19 @@ class UserCircle extends StatelessWidget {
           children: <Widget>[
             Align(
               alignment: Alignment.center,
-              child: Text(
-                Utils.getInitials(userProvider.getUser.name),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: UniversalVariables.lightBlueColor,
-                  fontSize: 13,
+              child: Shimmer.fromColors(
+                baseColor: UniversalVariables.blackColor,
+                highlightColor: Colors.lightBlue,
+                child: Text(
+                  userProvider.getUser.name.isEmpty
+                      ? Utils.getInitials(userProvider.getUser.name)
+                      : 'Hồ sơ người dùng',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
                 ),
+                period: Duration(seconds: 1),
               ),
             ),
             Align(

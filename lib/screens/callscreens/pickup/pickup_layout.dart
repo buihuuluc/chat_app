@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chat_app/screens/callscreens/pickup/pickup_screen.dart';
 import 'package:chat_app/models/call.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/call_methods.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_screen.dart';
 
 class PickupLayout extends StatelessWidget {
   final Widget scaffold;

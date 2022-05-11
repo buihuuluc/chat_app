@@ -6,23 +6,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:chat_app/models/user.dart';
+import 'package:chat_app/screens/callscreens/pickup/pickup_screen.dart';
 import 'package:chat_app/configs/api_key.dart';
 import 'package:chat_app/models/call.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/call_methods.dart';
 
-class CallScreen extends StatefulWidget {
+class AudioCallScreen extends StatefulWidget {
   final Call call;
 
-  CallScreen({
+  AudioCallScreen({
     @required this.call,
   });
 
   @override
-  _CallScreenState createState() => _CallScreenState();
+  _AudioCallScreenState createState() => _AudioCallScreenState();
 }
 
-class _CallScreenState extends State<CallScreen> {
+class _AudioCallScreenState extends State<AudioCallScreen> {
   final CallMethods callMethods = CallMethods();
 
   UserProvider userProvider;
@@ -32,6 +34,40 @@ class _CallScreenState extends State<CallScreen> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
+  bool volClick = false;
+  int vol = 0;
+
+  // static const maxSeconds = 60;
+  int seconds = 0;
+  int minute = 0;
+  int hour = 0;
+  Timer timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        seconds++;
+        if (seconds >= 60) {
+          seconds = 0;
+          minute += 1;
+          if (minute >= 60) {
+            hour += 1;
+            minute = 0;
+          }
+        }
+      });
+    });
+  }
+
+  void _startCall() {
+    final isRunning = timer == null ? false : timer.isActive;
+
+    isRunning ? false : startTimer();
+  }
+
+  void _stopCall() {
+    timer.cancel();
+  }
 
   @override
   void initState() {
@@ -45,9 +81,9 @@ class _CallScreenState extends State<CallScreen> {
     if (APP_ID.isEmpty) {
       setState(() {
         _infoStrings.add(
-          'APP_ID missing, please provide your APP_ID in settings.dart',
+          'Lỗi APP_ID, Ứng dụng sẽ sớm được cập nhật xin lỗi vì sự bất tiện này',
         );
-        _infoStrings.add('Agora Engine is not starting');
+        _infoStrings.add('Agora Engine không khởi động');
       });
       return;
     }
@@ -81,10 +117,20 @@ class _CallScreenState extends State<CallScreen> {
     });
   }
 
+  /// trả về list user call
+  List<Widget> _checkUserList() {
+    final List<AgoraRenderWidget> list = [
+      AgoraRenderWidget(0, local: true, preview: true),
+    ];
+    _users.forEach((int uid) => list.add(AgoraRenderWidget(uid)));
+    list.length >= 2 ? _startCall() : false; //Xử lý kết thúc gọi
+    return list;
+  }
+
   /// Create agora sdk instance and initialize
   Future<void> _initAgoraRtcEngine() async {
     await AgoraRtcEngine.create(APP_ID);
-    await AgoraRtcEngine.enableVideo();
+    // await AgoraRtcEngine.enableVideo();
   }
 
   /// Add agora event handlers
@@ -160,7 +206,6 @@ class _CallScreenState extends State<CallScreen> {
 
     AgoraRtcEngine.onUserOffline = (int uid, int reason) {
       // if call was picked
-
       setState(() {
         final info = 'userOffline: $uid';
         _infoStrings.add(info);
@@ -181,78 +226,12 @@ class _CallScreenState extends State<CallScreen> {
     };
   }
 
-  /// trả về list user call
-  List<Widget> _getRenderViews() {
-    final List<AgoraRenderWidget> list = [
-      AgoraRenderWidget(0, local: true, preview: true),
-    ];
-    _users.forEach((int uid) => list.add(AgoraRenderWidget(uid)));
-    return list;
-  }
-
   /// Màn hình đơn
   Widget _videoView(view) {
-    return Expanded(child: Container(child: view));
+    return Expanded(child: Container(child: PickupScreen()));
   }
 
-  /// Video view row wrapper - chia phân đôi video
-  Widget _expandedVideoRow(List<Widget> views) {
-    final wrappedViews = views.map<Widget>(_videoView).toList();
-    return Expanded(
-      child: Row(
-        children: wrappedViews,
-      ),
-    );
-  }
-
-  /// Video layout wrapper
-  Widget _viewRows() {
-    final views = _getRenderViews();
-    switch (views.length) {
-      case 1:
-        return Container(
-            child: Column(
-          children: <Widget>[_videoView(views[0])],
-        ));
-      case 2:
-        return Stack(
-          children: [
-            Center(child: views[1]),
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                margin: EdgeInsets.only(top: 10, right: 10),
-                width: 180,
-                height: 230,
-                child: Center(
-                  child: views[0],
-                ),
-              ),
-            ),
-          ],
-        );
-      case 3:
-        return Container(
-            child: Column(
-          children: <Widget>[
-            _expandedVideoRow(views.sublist(0, 2)),
-            _expandedVideoRow(views.sublist(2, 3))
-          ],
-        ));
-      case 4:
-        return Container(
-            child: Column(
-          children: <Widget>[
-            _expandedVideoRow(views.sublist(0, 2)),
-            _expandedVideoRow(views.sublist(2, 4))
-          ],
-        ));
-      default:
-    }
-    return Container();
-  }
-
-  /// Info panel to show logs
+  /// Bảng ghi nhật ký cuộc gọi
   Widget _panel() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 48),
@@ -309,58 +288,108 @@ class _CallScreenState extends State<CallScreen> {
     AgoraRtcEngine.muteLocalAudioStream(muted);
   }
 
-  void _onSwitchCamera() {
-    AgoraRtcEngine.switchCamera();
+  void _onToggleMuteVol() {
+    setState(() {
+      volClick = !volClick;
+      volClick ? vol = 100 : vol = 50;
+    });
+    // AgoraRtcEngine.disableAudio();
+    AgoraRtcEngine.adjustPlaybackSignalVolume(vol);
   }
 
-  /// Toolbar layout
-  Widget _toolbar() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RawMaterialButton(
-            onPressed: _onToggleMute,
-            child: Icon(
-              muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
-              color: muted ? Colors.red : Colors.white,
-              size: 30.0,
+  //
+  Widget _audioScreen() {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Image
+        Image.network(
+          "https://dotobjyajpegd.cloudfront.net/photo/5d3a66f962710e25dc99ffa3",
+          fit: BoxFit.cover,
+        ), // Black Layer
+        DecoratedBox(
+          decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Jemmy \nWilliams",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      .copyWith(color: Colors.white),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  _checkUserList().length >= 2
+                      ? "Đang gọi:" +
+                          '$hour' +
+                          ':' +
+                          '$minute' +
+                          ':' +
+                          '$seconds'.toUpperCase()
+                      : 'Đang chờ...',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.6),
+                  ),
+                ),
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RawMaterialButton(
+                      onPressed: _onToggleMute,
+                      child: Icon(
+                        muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
+                        color: muted ? Colors.red : Colors.white,
+                        size: 30.0,
+                      ),
+                      shape: CircleBorder(),
+                      elevation: 2.0,
+                      fillColor: Colors.black26,
+                      padding: const EdgeInsets.all(12.0),
+                    ),
+                    RawMaterialButton(
+                      onPressed: () => callMethods.endCall(
+                        call: widget.call,
+                      ),
+                      child: Icon(
+                        Icons.call_end,
+                        color: Colors.white,
+                        size: 40.0,
+                      ),
+                      shape: CircleBorder(),
+                      elevation: 2.0,
+                      fillColor: Colors.redAccent,
+                      padding: const EdgeInsets.all(15.0),
+                    ),
+                    RawMaterialButton(
+                      onPressed: _onToggleMuteVol,
+                      child: Icon(
+                        volClick
+                            ? CupertinoIcons.volume_off
+                            : CupertinoIcons.volume_down,
+                        color: volClick ? Colors.red : Colors.white,
+                        size: 30.0,
+                      ),
+                      shape: CircleBorder(),
+                      elevation: 2.0,
+                      fillColor: Colors.black26,
+                      padding: const EdgeInsets.all(12.0),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.black26,
-            padding: const EdgeInsets.all(12.0),
           ),
-          RawMaterialButton(
-            onPressed: () => callMethods.endCall(
-              call: widget.call,
-            ),
-            child: Icon(
-              Icons.call_end,
-              color: Colors.white,
-              size: 40.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.redAccent,
-            padding: const EdgeInsets.all(15.0),
-          ),
-          RawMaterialButton(
-            onPressed: _onSwitchCamera,
-            child: Icon(
-              CupertinoIcons.switch_camera,
-              color: Colors.white,
-              size: 30.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.black26,
-            padding: const EdgeInsets.all(12.0),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -382,12 +411,48 @@ class _CallScreenState extends State<CallScreen> {
       body: Center(
         child: Stack(
           children: <Widget>[
-            _viewRows(),
-            // _panel(),
-            _toolbar(),
+            _audioScreen(),
           ],
         ),
       ),
     );
   }
 }
+
+// Widget _toolbar() {
+//     return Container(
+//       alignment: Alignment.bottomCenter,
+//       padding: const EdgeInsets.symmetric(vertical: 48),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           RawMaterialButton(
+//             onPressed: _onToggleMute,
+//             child: Icon(
+//               muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
+//               color: muted ? Colors.red: Colors.white,
+//               size: 30.0,
+//             ),
+//             shape: CircleBorder(),
+//             elevation: 2.0,
+//             fillColor:  Colors.black26,
+//             padding: const EdgeInsets.all(12.0),
+//           ),
+//           RawMaterialButton(
+//             onPressed: () => callMethods.endCall(
+//               call: widget.call,
+//             ),
+//             child: Icon(
+//               Icons.call_end,
+//               color: Colors.white,
+//               size: 40.0,
+//             ),
+//             shape: CircleBorder(),
+//             elevation: 2.0,
+//             fillColor: Colors.redAccent,
+//             padding: const EdgeInsets.all(15.0),
+//           ),
+//         ],
+//       ),
+//     );
+//   }

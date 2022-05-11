@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:chat_app/screens/search_screen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 
-class QuiteBox extends StatelessWidget {
+class QuietBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -16,7 +16,7 @@ class QuiteBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "This is where all the contacts are listed",
+                "Danh Sách Liên Hệ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -25,7 +25,7 @@ class QuiteBox extends StatelessWidget {
               ),
               SizedBox(height: 25),
               Text(
-                "Search for your friends and family to start calling or chatting with them",
+                "Tìm kiếm bạn bè",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   letterSpacing: 1.2,
@@ -36,7 +36,7 @@ class QuiteBox extends StatelessWidget {
               SizedBox(height: 25),
               FlatButton(
                 color: UniversalVariables.lightBlueColor,
-                child: Text("START SEARCHING"),
+                child: Text("Bắt đầu tìm"),
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(

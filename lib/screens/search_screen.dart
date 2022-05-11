@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/resources/auth_methods.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/chatscreens/chat_screen.dart';
-import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
 
@@ -23,6 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
     _authMethods.getCurrentUser().then((FirebaseUser user) {
@@ -36,12 +35,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   searchAppBar(BuildContext context) {
     return NewGradientAppBar(
-      gradient: LinearGradient(
-        colors: [
-          UniversalVariables.gradientColorStart,
-          UniversalVariables.gradientColorEnd,
-        ],
-      ),
+      gradient: LinearGradient(colors: [
+        UniversalVariables.gradientColorStart,
+        UniversalVariables.gradientColorEnd
+      ]),
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.pop(context),
@@ -90,20 +87,18 @@ class _SearchScreenState extends State<SearchScreen> {
   buildSuggestions(String query) {
     final List<User> suggestionList = query.isEmpty
         ? []
-        : userList != null
-            ? userList.where((User user) {
-                String _getUsername = user.username.toLowerCase();
-                String _query = query.toLowerCase();
-                String _getName = user.name.toLowerCase();
-                bool matchesUsername = _getUsername.contains(_query);
-                bool matchesName = _getName.contains(_query);
+        : userList.where((User user) {
+            String _getUsername = user.username.toLowerCase();
+            String _query = query.toLowerCase();
+            String _getName = user.name.toLowerCase();
+            bool matchesUsername = _getUsername.contains(_query);
+            bool matchesName = _getName.contains(_query);
 
-                return (matchesUsername || matchesName);
+            return (matchesUsername || matchesName);
 
-                // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
-                //     (user.name.toLowerCase().contains(query.toLowerCase()))),
-              }).toList()
-            : [];
+            // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
+            //     (user.name.toLowerCase().contains(query.toLowerCase()))),
+          }).toList();
 
     return ListView.builder(
       itemCount: suggestionList.length,
@@ -124,15 +119,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           receiver: searchedUser,
                         )));
           },
-          leading: CachedImage(
-            searchedUser.profilePhoto,
-            radius: 25,
-            isRound: true,
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(searchedUser.profilePhoto),
+            backgroundColor: Colors.grey,
           ),
-          // leading: CircleAvatar(
-          //   backgroundImage: NetworkImage(searchedUser.profilePhoto),
-          //   backgroundColor: Colors.grey,
-          // ),
           title: Text(
             searchedUser.username,
             style: TextStyle(
@@ -151,14 +141,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
-        appBar: searchAppBar(context),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: buildSuggestions(query),
-        ),
+    return Scaffold(
+      backgroundColor: UniversalVariables.blackColor,
+      appBar: searchAppBar(context),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: buildSuggestions(query),
       ),
     );
   }

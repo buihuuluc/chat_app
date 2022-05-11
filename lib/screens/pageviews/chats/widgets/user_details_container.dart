@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/screens/login_screen.dart';
+import 'package:chat_app/screens/pageviews/chats/widgets/shimmering_logo.dart';
 import 'package:chat_app/widgets/appbar.dart';
-
-import 'shimmering_logo.dart';
+import 'package:provider/provider.dart';
 
 class UserDetailsContainer extends StatelessWidget {
   final AuthMethods authMethods = AuthMethods();

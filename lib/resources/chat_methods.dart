@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/models/contact.dart';
 import 'package:chat_app/models/message.dart';
-import 'package:meta/meta.dart';
+import 'package:chat_app/models/user.dart';
 
 class ChatMethods {
   static final Firestore _firestore = Firestore.instance;
@@ -15,8 +15,7 @@ class ChatMethods {
       _firestore.collection(USERS_COLLECTION);
 
   Future<void> addMessageToDb(
-    Message message,
-  ) async {
+      Message message, User sender, User receiver) async {
     var map = message.toMap();
 
     await _messageCollection

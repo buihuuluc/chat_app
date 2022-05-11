@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/resources/local_db/repository/log_repository.dart';
 import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/pageviews/chats/chat_list_screen.dart';
-import 'package:chat_app/screens/pageviews/logs/log_screen.dart';
+import 'package:chat_app/screens/pageviews/chats/logs/log_screen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -113,11 +114,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           children: <Widget>[
             ChatListScreen(),
             LogScreen(),
-            Center(
-                child: Text(
-              "Contact Screen",
-              style: TextStyle(color: Colors.white),
-            )),
+            // Center(
+            //     child: Text(
+            //   "Contact Screen",
+            //   style: TextStyle(color: Colors.white),
+            // )),
           ],
           controller: pageController,
           onPageChanged: onPageChanged,
@@ -130,12 +131,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               backgroundColor: UniversalVariables.blackColor,
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.chat,
+                  icon: Icon(CupertinoIcons.chat_bubble_fill,
                       color: (_page == 0)
                           ? UniversalVariables.lightBlueColor
                           : UniversalVariables.greyColor),
                   title: Text(
-                    "Chats",
+                    "Tin Nhắn",
                     style: TextStyle(
                         fontSize: _labelFontSize,
                         color: (_page == 0)
@@ -144,12 +145,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.call,
+                  icon: Icon(CupertinoIcons.phone_fill_arrow_up_right,
                       color: (_page == 1)
                           ? UniversalVariables.lightBlueColor
                           : UniversalVariables.greyColor),
                   title: Text(
-                    "Calls",
+                    "Nhật ký cuộc gọi",
                     style: TextStyle(
                         fontSize: _labelFontSize,
                         color: (_page == 1)
@@ -157,20 +158,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             : Colors.grey),
                   ),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.contact_phone,
-                      color: (_page == 2)
-                          ? UniversalVariables.lightBlueColor
-                          : UniversalVariables.greyColor),
-                  title: Text(
-                    "Contacts",
-                    style: TextStyle(
-                        fontSize: _labelFontSize,
-                        color: (_page == 2)
-                            ? UniversalVariables.lightBlueColor
-                            : Colors.grey),
-                  ),
-                ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(Icons.contact_phone,
+                //       color: (_page == 2)
+                //           ? UniversalVariables.lightBlueColor
+                //           : UniversalVariables.greyColor),
+                //   title: Text(
+                //     "Contacts",
+                //     style: TextStyle(
+                //         fontSize: _labelFontSize,
+                //         color: (_page == 2)
+                //             ? UniversalVariables.lightBlueColor
+                //             : Colors.grey),
+                //   ),
+                // ),
               ],
               onTap: navigationTapped,
               currentIndex: _page,

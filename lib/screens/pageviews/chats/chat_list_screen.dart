@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:chat_app/models/contact.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/pageviews/chats/widgets/contact_view.dart';
-import 'package:chat_app/screens/pageviews/chats/widgets/quiet_box.dart';
 import 'package:chat_app/screens/pageviews/chats/widgets/user_circle.dart';
 import 'package:chat_app/utils/universal_variables.dart';
+import 'package:chat_app/widgets/quiet_box.dart';
 import 'package:chat_app/widgets/skype_appbar.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/new_chat_button.dart';
 
@@ -63,13 +63,13 @@ class ChatListContainer extends StatelessWidget {
             if (snapshot.hasData) {
               var docList = snapshot.data.documents;
 
-              if (docList.isEmpty) {
-                return QuietBox(
-                  heading: "This is where all the contacts are listed",
-                  subtitle:
-                      "Search for your friends and family to start calling or chatting with them",
-                );
-              }
+              // if (docList.isEmpty) {
+              //   return QuietBox(
+              //     heading: "This is where all the contacts are listed",
+              //     subtitle:
+              //         "Search for your friends and family to start calling or chatting with them",
+              //   );
+              // }
               return ListView.builder(
                 padding: EdgeInsets.all(10),
                 itemCount: docList.length,

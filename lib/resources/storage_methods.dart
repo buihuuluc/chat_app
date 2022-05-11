@@ -4,8 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/image_upload_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chat_app/resources/chat_methods.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StorageMethods {
   static final Firestore firestore = Firestore.instance;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:chat_app/screens/search_screen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
+
+import '../../../search_screen.dart';
 
 class QuietBox extends StatelessWidget {
   final String heading;
@@ -44,7 +45,7 @@ class QuietBox extends StatelessWidget {
               SizedBox(height: 25),
               FlatButton(
                 color: UniversalVariables.lightBlueColor,
-                child: Text("START SEARCHING"),
+                child: Text("Tìm kiếm"),
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(

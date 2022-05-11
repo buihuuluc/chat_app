@@ -1,26 +1,34 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker/emoji_lists.dart';
 import 'package:emoji_picker/emoji_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/enum/view_state.dart';
 import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/image_upload_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
-import 'package:chat_app/resources/chat_methods.dart';
-import 'package:chat_app/resources/storage_methods.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:chat_app/screens/arcore_screen.dart';
+import 'package:chat_app/screens/chatscreens/filter_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
+import 'package:chat_app/screens/full_Image.dart';
 import 'package:chat_app/utils/call_utilities.dart';
 import 'package:chat_app/utils/permissions.dart';
-import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/utils/utilities.dart';
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/appbar.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat_app/resources/chat_methods.dart';
+import 'package:chat_app/resources/storage_methods.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -32,24 +40,31 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  ImageUploadProvider _imageUploadProvider;
-
+  TextEditingController textFieldController = TextEditingController();
   final StorageMethods _storageMethods = StorageMethods();
   final ChatMethods _chatMethods = ChatMethods();
   final AuthMethods _authMethods = AuthMethods();
+  var vitriTinNhan = 0;
 
-  TextEditingController textFieldController = TextEditingController();
-  FocusNode textFieldFocus = FocusNode();
+  //Trình đk scroll
   ScrollController _listScrollController = ScrollController();
 
+  //Khởi tạo lớp providerimage
+  ImageUploadProvider _imageUploadProvider;
+
   User sender;
+
   String _currentUserId;
+
+  FocusNode textFieldFocus = FocusNode();
+
   bool isWriting = false;
   bool showEmojiPicker = false;
 
   @override
   void initState() {
     super.initState();
+
     _authMethods.getCurrentUser().then((user) {
       _currentUserId = user.uid;
 
@@ -83,26 +98,23 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
 
-    return PickupLayout(
-      scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
-        appBar: customAppBar(context),
-        body: Column(
-          children: <Widget>[
-            Flexible(
-              child: messageList(),
-            ),
-            _imageUploadProvider.getViewState == ViewState.LOADING
-                ? Container(
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 15),
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(),
-            chatControls(),
-            showEmojiPicker ? Container(child: emojiContainer()) : Container(),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: UniversalVariables.blackColor,
+      appBar: customAppBar(context),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: messageList(),
+          ),
+          _imageUploadProvider.getViewState == ViewState.LOADING
+              ? Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 15),
+                  child: CircularProgressIndicator())
+              : Container(),
+          chatControls(),
+          showEmojiPicker ? Container(child: emojiContainer()) : Container(),
+        ],
       ),
     );
   }
@@ -138,21 +150,24 @@ class _ChatScreenState extends State<ChatScreen> {
           return Center(child: CircularProgressIndicator());
         }
 
-        // SchedulerBinding.instance.addPostFrameCallback((_) {
-        //   _listScrollController.animateTo(
-        //     _listScrollController.position.minScrollExtent,
-        //     duration: Duration(milliseconds: 250),
-        //     curve: Curves.easeInOut,
-        //   );
-        // });
+        // Cuộn về cuối danh sách khi reload
+        //(Ví dụ người dùng nhập tin nhắn nó sẽ auto cuộn về vị trí cuối list)
+        //Nhưng cũng gây một số bất tiện vs một số người dùng - tạm thời cm
+        //  SchedulerBinding.instance.addPostFrameCallback((_) {
+        //     _listScrollController.animateTo(
+        //       _listScrollController.position.minScrollExtent,
+        //       duration: Duration(milliseconds: 250),
+        //       curve: Curves.easeInOut,
+        //     );
+        //   });
 
         return ListView.builder(
           padding: EdgeInsets.all(10),
-          controller: _listScrollController,
           reverse: true,
+          controller: _listScrollController,
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {
-            // mention the arrow syntax if you get the time
+            vitriTinNhan = index;
             return chatMessageItem(snapshot.data.documents[index]);
           },
         );
@@ -162,7 +177,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
     Message _message = Message.fromMap(snapshot.data);
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
@@ -179,66 +193,117 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget senderLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
 
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints:
-          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-      decoration: BoxDecoration(
-        color: UniversalVariables.senderColor,
-        borderRadius: BorderRadius.only(
-          topLeft: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+    //Trả về khối tin nhắn sender
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 12),
+          constraints:
+              // Đoạn này giữ cho đoạn tin nhắn không vượt quá giá trị <ở đây là 65% màn hình>
+              BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.65),
+          decoration: BoxDecoration(
+            color: UniversalVariables.senderColor,
+            borderRadius: BorderRadius.only(
+              topLeft: messageRadius,
+              topRight: messageRadius,
+              bottomLeft: messageRadius,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: getMessage(message),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: getMessage(message),
-      ),
+        Container(
+          padding: EdgeInsets.all(5),
+          child: Text(partTime(message.timestamp),
+              style: TextStyle(color: Colors.white, fontSize: 12)
+              // message.timestamp.toDate().month.toString()
+              ),
+        ),
+      ],
     );
   }
 
+  //Phương thức này để lấy dữ liệu tin nhắn từ user nhập thông qua DB
   getMessage(Message message) {
     return message.type != MESSAGE_TYPE_IMAGE
         ? Text(
-            message.message,
+            message != null ? message.message : "",
             style: TextStyle(
               color: Colors.white,
               fontSize: 16.0,
             ),
           )
         : message.photoUrl != null
-            ? CachedImage(
-                message.photoUrl,
-                height: 250,
-                width: 250,
-                radius: 10,
+            ? GestureDetector(
+                child: CachedImage(
+                  message.photoUrl,
+                  width: 250,
+                  height: 250,
+                  radius: 5,
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FullImageScreen(photoUrl: message.photoUrl)));
+                },
               )
-            : Text("Url was null");
+            : Text('No picture');
   }
 
+  // Widget bố cục tin nhắn phía người nhận
   Widget receiverLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
-
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints:
-          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-      decoration: BoxDecoration(
-        color: UniversalVariables.receiverColor,
-        borderRadius: BorderRadius.only(
-          bottomRight: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+    bool flag = null;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          // onDoubleTap: (){},
+          child: Container(
+            margin: EdgeInsets.only(top: 12),
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.65),
+            decoration: BoxDecoration(
+              color: UniversalVariables.receiverColor,
+              borderRadius: BorderRadius.only(
+                bottomRight: messageRadius,
+                topRight: messageRadius,
+                bottomLeft: messageRadius,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: getMessage(message),
+            ),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: getMessage(message),
-      ),
+        Container(
+          padding: EdgeInsets.all(5),
+          child: Text(partTime(message.timestamp),
+              style: TextStyle(color: Colors.white, fontSize: 12)
+              // message.timestamp.toDate().month.toString()
+              ),
+        ),
+      ],
     );
   }
 
+  pickImage({@required ImageSource source}) async {
+    File selectedImage = await Utils.pickImage(source: source);
+    _storageMethods.uploadImage(
+        image: selectedImage,
+        receiverId: widget.receiver.uid,
+        senderId: _currentUserId,
+        imageUploadProvider: _imageUploadProvider);
+  }
+
+  //Widget chatcontrok
   Widget chatControls() {
     setWritingTo(bool val) {
       setState(() {
@@ -246,6 +311,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     }
 
+    //cấu hình contain thêm các Media vào hội thoại
     addMediaModal(context) {
       showModalBottomSheet(
           context: context,
@@ -268,7 +334,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Content and tools",
+                            "PHƯƠNG THỨC GỬI",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -283,36 +349,31 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: ListView(
                     children: <Widget>[
                       ModalTile(
-                        title: "Media",
-                        subtitle: "Share Photos and Video",
+                        title: "Ảnh",
+                        subtitle: "Chia sẻ ảnh thư viện",
                         icon: Icons.image,
                         onTap: () => pickImage(source: ImageSource.gallery),
                       ),
                       ModalTile(
-                        title: "File",
-                        subtitle: "Share files",
-                        icon: Icons.tab,
-                      ),
+                          title: "File",
+                          subtitle: "Chọn một file",
+                          icon: Icons.tab),
                       ModalTile(
-                        title: "Contact",
-                        subtitle: "Share contacts",
-                        icon: Icons.contacts,
-                      ),
+                          title: "Liên Hệ",
+                          subtitle: "Gửi danh thiếp bạn bè",
+                          icon: Icons.contacts_sharp),
                       ModalTile(
-                        title: "Location",
-                        subtitle: "Share a location",
-                        icon: Icons.add_location,
-                      ),
+                          title: "Vị trí",
+                          subtitle: "Chia sẻ vị trí của bạn",
+                          icon: Icons.add_location),
                       ModalTile(
-                        title: "Schedule Call",
-                        subtitle: "Arrange a skype call and get reminders",
-                        icon: Icons.schedule,
-                      ),
+                          title: "Lịch",
+                          subtitle: "Sắp xếp một cuộc gọi và nhận lời nhắc",
+                          icon: Icons.schedule),
                       ModalTile(
-                        title: "Create Poll",
-                        subtitle: "Share polls",
-                        icon: Icons.poll,
-                      )
+                          title: "Tạo bình chọn",
+                          subtitle: "Tạo một cuộc bình chọn",
+                          icon: Icons.poll)
                     ],
                   ),
                 ),
@@ -338,9 +399,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _chatMethods.addMessageToDb(_message);
+      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
+    //Widget điều khiển thanh chat
     return Container(
       padding: EdgeInsets.all(10),
       child: Row(
@@ -376,7 +438,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         : setWritingTo(false);
                   },
                   decoration: InputDecoration(
-                    hintText: "Type a message",
+                    hintText: "Nhập tin nhắn...",
                     hintStyle: TextStyle(
                       color: UniversalVariables.greyColor,
                     ),
@@ -405,7 +467,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       hideEmojiContainer();
                     }
                   },
-                  icon: Icon(Icons.face),
+                  icon: Icon(CupertinoIcons.smiley),
                 ),
               ],
             ),
@@ -414,7 +476,16 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Container()
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(Icons.record_voice_over),
+                  child: GestureDetector(
+                      child: Icon(
+                        CupertinoIcons.wand_stars,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FillterScreen()));
+                      }),
                 ),
           isWriting
               ? Container()
@@ -441,15 +512,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void pickImage({@required ImageSource source}) async {
-    File selectedImage = await Utils.pickImage(source: source);
-    _storageMethods.uploadImage(
-        image: selectedImage,
-        receiverId: widget.receiver.uid,
-        senderId: _currentUserId,
-        imageUploadProvider: _imageUploadProvider);
-  }
-
   CustomAppBar customAppBar(context) {
     return CustomAppBar(
       leading: IconButton(
@@ -466,26 +528,49 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       actions: <Widget>[
         IconButton(
+            icon: Icon(
+              CupertinoIcons.ant,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ArrCoreScreen()));
+            }),
+        IconButton(
           icon: Icon(
-            Icons.video_call,
+            CupertinoIcons.video_camera,
+            size: 30,
           ),
           onPressed: () async =>
               await Permissions.cameraAndMicrophonePermissionsGranted()
                   ? CallUtils.dial(
-                      from: sender,
-                      to: widget.receiver,
-                      context: context,
-                    )
+                      from: sender, to: widget.receiver, context: context)
                   : {},
         ),
         IconButton(
           icon: Icon(
-            Icons.phone,
+            CupertinoIcons.phone,
           ),
-          onPressed: () {},
+          onPressed: () async =>
+              await Permissions.cameraAndMicrophonePermissionsGranted()
+                  ? CallUtils.dialAudio(
+                      from: sender, to: widget.receiver, context: context)
+                  : {},
         )
       ],
     );
+  }
+
+  String partTime(Timestamp time) {
+    var day = time.toDate().day.toString();
+    var month = time.toDate().month.toString();
+    var year = time.toDate().year.toString();
+    var h = time.toDate().hour.toString();
+    var p = time.toDate().minute.toString();
+    var s = time.toDate().second.toString();
+    // String a = 'Ngày '+ day + '/' + month + '/' + year + ' | '+h+':'+p;
+    String a = h + ':' + p;
+    return a;
   }
 }
 
@@ -495,12 +580,11 @@ class ModalTile extends StatelessWidget {
   final IconData icon;
   final Function onTap;
 
-  const ModalTile({
-    @required this.title,
-    @required this.subtitle,
-    @required this.icon,
-    this.onTap,
-  });
+  const ModalTile(
+      {@required this.title,
+      @required this.subtitle,
+      @required this.icon,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {

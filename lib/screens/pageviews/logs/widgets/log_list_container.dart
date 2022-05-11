@@ -73,17 +73,26 @@ class _LogListContainerState extends State<LogListContainer> {
                     hasDialled ? _log.receiverPic : _log.callerPic,
                     isRound: true,
                     radius: 45,
+                    height: 50,
+                    width: 50,
                   ),
                   mini: false,
                   onLongPress: () => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("Delete this Log?"),
-                      content:
-                          Text("Are you sure you wish to delete this log?"),
+                      title: Align(
+                          alignment: Alignment.topCenter,
+                          child: Text("Nhắc nhở !!")),
+                      titleTextStyle: TextStyle(
+                        fontSize: 30,
+                        color: Colors.red[400],
+                      ),
+                      content: Text("Bạn muốn xoá nhật ký này ?"),
+                      contentTextStyle: TextStyle(fontSize: 20),
                       actions: [
                         FlatButton(
-                          child: Text("YES"),
+                          child: Text("Xoá"),
+                          textColor: Colors.red,
                           onPressed: () async {
                             Navigator.maybePop(context);
                             await LogRepository.deleteLogs(i);
@@ -93,7 +102,8 @@ class _LogListContainerState extends State<LogListContainer> {
                           },
                         ),
                         FlatButton(
-                          child: Text("NO"),
+                          child: Text("Trở Lại"),
+                          textColor: Colors.green,
                           onPressed: () => Navigator.maybePop(context),
                         ),
                       ],
@@ -118,14 +128,14 @@ class _LogListContainerState extends State<LogListContainer> {
             );
           }
           return QuietBox(
-            heading: "This is where all your call logs are listed",
-            subtitle: "Calling people all over the world with just one click",
+            heading: "Nhật Ký Hiện Đang Trống",
+            subtitle: "Tìm kiếm bạn và gọi cho họ ngay nào!",
           );
         }
 
         return QuietBox(
-          heading: "This is where all your call logs are listed",
-          subtitle: "Calling people all over the world with just one click",
+          heading: "Nhật Ký Hiện Đang Trống",
+          subtitle: "Tìm kiếm bạn và gọi cho họ ngay nào!",
         );
       },
     );
