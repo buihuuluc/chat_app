@@ -5,6 +5,7 @@ import 'package:chat_app/models/user.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/chatscreens/chat_screen.dart';
+import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
 
@@ -123,10 +124,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           receiver: searchedUser,
                         )));
           },
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(searchedUser.profilePhoto),
-            backgroundColor: Colors.grey,
+          leading: CachedImage(
+            searchedUser.profilePhoto,
+            radius: 25,
+            isRound: true,
           ),
+          // leading: CircleAvatar(
+          //   backgroundImage: NetworkImage(searchedUser.profilePhoto),
+          //   backgroundColor: Colors.grey,
+          // ),
           title: Text(
             searchedUser.username,
             style: TextStyle(

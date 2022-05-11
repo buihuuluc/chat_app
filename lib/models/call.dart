@@ -19,6 +19,7 @@ class Call {
     this.hasDialled,
   });
 
+  // to map
   Map<String, dynamic> toMap(Call call) {
     Map<String, dynamic> callMap = Map();
     callMap["caller_id"] = call.callerId;

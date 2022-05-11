@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/resources/auth_methods.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'home_screen.dart';
 
@@ -51,19 +51,18 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void performLogin() {
-    print("tring to perform login");
-
+  void performLogin() async {
     setState(() {
       isLoginPressed = true;
     });
 
-    _authMethods.signIn().then((FirebaseUser user) {
-      if (user != null) {
-        authenticateUser(user);
-      } else {
-        print("There was an error");
-      }
+    FirebaseUser user = await _authMethods.signIn();
+
+    if (user != null) {
+      authenticateUser(user);
+    }
+    setState(() {
+      isLoginPressed = false;
     });
   }
 

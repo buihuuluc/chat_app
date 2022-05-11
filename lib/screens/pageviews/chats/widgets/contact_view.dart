@@ -7,11 +7,10 @@ import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/screens/chatscreens/chat_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
-import 'package:chat_app/screens/pageviews/widgets/online_dot_indicator.dart';
-import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
 
 import 'last_message_container.dart';
+import 'online_dot_indicator.dart';
 
 class ContactView extends StatelessWidget {
   final Contact contact;

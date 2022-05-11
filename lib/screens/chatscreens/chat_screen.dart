@@ -15,7 +15,7 @@ import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/resources/storage_methods.dart';
 import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
-import 'package:chat_app/utils/call_ultilities.dart';
+import 'package:chat_app/utils/call_utilities.dart';
 import 'package:chat_app/utils/permissions.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/utils/utilities.dart';
@@ -32,24 +32,20 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController textFieldController = TextEditingController();
-  FocusNode textFieldFocus = FocusNode();
+  ImageUploadProvider _imageUploadProvider;
 
   final StorageMethods _storageMethods = StorageMethods();
   final ChatMethods _chatMethods = ChatMethods();
   final AuthMethods _authMethods = AuthMethods();
 
+  TextEditingController textFieldController = TextEditingController();
+  FocusNode textFieldFocus = FocusNode();
   ScrollController _listScrollController = ScrollController();
 
   User sender;
-
   String _currentUserId;
-
   bool isWriting = false;
-
   bool showEmojiPicker = false;
-
-  ImageUploadProvider _imageUploadProvider;
 
   @override
   void initState() {
@@ -342,7 +338,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
+      _chatMethods.addMessageToDb(_message);
     }
 
     return Container(
@@ -475,7 +471,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           onPressed: () async =>
               await Permissions.cameraAndMicrophonePermissionsGranted()
-                  ? CallUltils.dial(
+                  ? CallUtils.dial(
                       from: sender,
                       to: widget.receiver,
                       context: context,
