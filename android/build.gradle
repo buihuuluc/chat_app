@@ -5,6 +5,7 @@ buildscript {
     }
 
     dependencies {
+        classpath 'com.google.ar.sceneform:plugin:1.17.0' // Thêm mô hình ngoài
         classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.google.gms:google-services:4.3.10'
     }
