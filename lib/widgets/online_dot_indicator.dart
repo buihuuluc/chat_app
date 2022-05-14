@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/resources/auth_methods.dart';
-import 'package:chat_app/utils/utilities.dart';
+import 'package:chat_app/utils/ultilities.dart';
 
 class OnlineDotIndicator extends StatelessWidget {
   final String uid;

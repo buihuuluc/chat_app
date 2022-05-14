@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/models/user.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_screen.dart';
+import 'package:chat_app/screens/call_screen/pickup/pickup_screen.dart';
 import 'package:chat_app/configs/api_key.dart';
 import 'package:chat_app/models/call.dart';
 import 'package:chat_app/provider/user_provider.dart';

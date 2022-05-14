@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:chat_app/constants/strings.dart';
+import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/models/user.dart';
+import 'package:chat_app/utils/ultilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chat_app/utils/utilities.dart';
 
 class AuthMethods {
   static final Firestore _firestore = Firestore.instance;

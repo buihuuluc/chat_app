@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/home_screen.dart';
-import 'package:chat_app/screens/registration_screen.dart';
+import 'package:chat_app/screens/regisation_screen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:shimmer/shimmer.dart';
 // import 'package:fluttertoast/fluttertoast.dart';

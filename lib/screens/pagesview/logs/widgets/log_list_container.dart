@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:chat_app/constants/strings.dart';
+import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/models/log.dart';
 import 'package:chat_app/resources/local_db/repository/log_repository.dart';
-import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
-import 'package:chat_app/screens/pageviews/chats/widgets/quiet_box.dart';
-import 'package:chat_app/utils/utilities.dart';
+import 'package:chat_app/screens/chat_screen/widget/cached_image.dart';
+import 'package:chat_app/screens/pagesview/chats/widgets/quiex_box.dart';
+import 'package:chat_app/utils/ultilities.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
 
 class LogListContainer extends StatefulWidget {

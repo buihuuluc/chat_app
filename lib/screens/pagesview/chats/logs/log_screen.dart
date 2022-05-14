@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
-import 'package:chat_app/screens/pageviews/logs/widgets/floating_column.dart';
+import 'package:chat_app/screens/call_screen/pickup/pickup_layout.dart';
+import 'package:chat_app/screens/pagesview/logs/widgets/floating_column.dart';
+import 'package:chat_app/screens/pagesview/logs/widgets/log_list_container.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/skype_appbar.dart';
 
@@ -11,7 +12,7 @@ class LogScreen extends StatelessWidget {
       scaffold: Scaffold(
         backgroundColor: UniversalVariables.blackColor,
         appBar: SkypeAppBar(
-          title: "Nhật Ký cuộc gọi",
+          title: "Calls",
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -25,7 +26,7 @@ class LogScreen extends StatelessWidget {
         floatingActionButton: FloatingColumn(),
         body: Padding(
           padding: EdgeInsets.only(left: 15),
-          // child: LogListContainer(),
+          child: LogListContainer(),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/constants/strings.dart';
+import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/models/contact.dart';
-import 'package:chat_app/models/message.dart';
+import 'package:chat_app/models/massage.dart';
 import 'package:chat_app/models/user.dart';
 
 class ChatMethods {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/resources/auth_methods.dart';
-import 'package:chat_app/screens/chatscreens/chat_screen.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/screens/chat_screen/chatscreen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SearchScreen extends StatefulWidget {
   @override

@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:chat_app/constants/strings.dart';
+import 'package:chat_app/constant/strings.dart';
 import 'package:chat_app/models/call.dart';
 import 'package:chat_app/models/log.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/resources/call_methods.dart';
 import 'package:chat_app/resources/local_db/repository/log_repository.dart';
-import 'package:chat_app/screens/callscreens/audiocall_screen.dart';
-import 'package:chat_app/screens/callscreens/call_screen.dart';
+import 'package:chat_app/screens/call_screen/audiocall_screen.dart';
+import 'package:chat_app/screens/call_screen/call_screen.dart';
 
 class CallUtils {
   static final CallMethods callMethods = CallMethods();

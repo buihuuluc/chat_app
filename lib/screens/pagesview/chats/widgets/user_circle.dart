@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chat_app/provider/user_provider.dart';
-import 'package:chat_app/screens/pageviews/chats/widgets/user_details_container.dart';
-import 'package:chat_app/utils/utilities.dart';
+import 'package:chat_app/screens/pagesview/chats/widgets/user_details_container.dart';
+import 'package:chat_app/utils/ultilities.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';

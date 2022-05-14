@@ -6,9 +6,9 @@ import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/resources/local_db/repository/log_repository.dart';
-import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
-import 'package:chat_app/screens/pageviews/chats/chat_list_screen.dart';
-import 'package:chat_app/screens/pageviews/chats/logs/log_screen.dart';
+import 'package:chat_app/screens/call_screen/pickup/pickup_layout.dart';
+import 'package:chat_app/screens/pagesview/chats/chat_list_screen.dart';
+import 'package:chat_app/screens/pagesview/chats/logs/log_screen.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:provider/provider.dart';
 

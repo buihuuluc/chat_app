@@ -5,8 +5,8 @@ import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/home_screen.dart';
 import 'package:chat_app/screens/login_screen.dart';
-// import 'package:chat_app/screens/login_screen.dart'; // Prj R
 import 'package:chat_app/screens/search_screen.dart';
+// import 'package:chat_app/screens/login_screen.dart'; // Prj R
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

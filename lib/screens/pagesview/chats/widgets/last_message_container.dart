@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/models/message.dart';
+import 'package:chat_app/models/massage.dart';
 
 class LastMessageContainer extends StatelessWidget {
   final stream;

@@ -1,5 +1,6 @@
-// Các trạng thái user.
-enum UserState {
+
+// Cấu trúc  Quản lý trạng thái người  dùng
+enum UserState{
   Offline,
   Online,
   Waiting,

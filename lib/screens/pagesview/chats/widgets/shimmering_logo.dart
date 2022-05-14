@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chat_app/utils/universal_variables.dart';
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmeringLogo extends StatelessWidget {
