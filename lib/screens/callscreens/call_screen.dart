@@ -31,15 +31,6 @@ class _CallScreenState extends State<CallScreen> {
   String dropdownValue = 'Off';
   UserProvider userProvider;
   StreamSubscription callStreamSubscription;
-  final List<String> voices = [
-    'Off',
-    'Oldman',
-    'BabyBoy',
-    'BabyGirl',
-    'Zhubajie',
-    'Ethereal',
-    'Hulk'
-  ];
 
   /// remote user list
   final _remoteUsers = List<int>();
@@ -53,9 +44,22 @@ class _CallScreenState extends State<CallScreen> {
     joinchanel();
   }
 
+  //Just added
+  @override
+  void dispose() {
+    // clear users
+    _users.clear();
+    // destroy sdk
+    AgoraRtcEngine.leaveChannel();
+    AgoraRtcEngine.destroy();
+    super.dispose();
+  }
+
   joinchanel() {
     _isInChannel = true;
     _toggleChannel();
+    muted = false;
+    _onToggleMute();
   }
 
   @override
@@ -69,7 +73,7 @@ class _CallScreenState extends State<CallScreen> {
               Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: _viewRows()),
+                  child: _viewColumn()),
             ],
           ),
           _toolbar(),
@@ -160,35 +164,12 @@ class _CallScreenState extends State<CallScreen> {
     AgoraRtcEngine.muteLocalAudioStream(muted);
   }
 
-  Widget _voiceDropdown() {
-    return Scaffold(
-      body: Center(
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-              VoiceChanger voice =
-                  VoiceChanger.values[(voices.indexOf(dropdownValue))];
-              AgoraRtcEngine.setLocalVoiceChanger(voice);
-            });
-          },
-          items: voices.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   Future<void> _initAgoraRtcEngine() async {
-    AgoraRtcEngine.create('2b4b76e458cf439aa7cd313b9504f0a4');
+    AgoraRtcEngine.create(APP_ID);
 
     AgoraRtcEngine.enableVideo();
     AgoraRtcEngine.enableAudio();
+    AgoraRtcEngine.muteLocalAudioStream(false);
     AgoraRtcEngine.setParameters(
         '{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}');
     AgoraRtcEngine.setChannelProfile(ChannelProfile.Communication);
@@ -262,7 +243,7 @@ class _CallScreenState extends State<CallScreen> {
     });
   }
 
-  Widget _viewRows() {
+  Widget _viewColumn() {
     return Column(
       children: <Widget>[
         for (final widget in _renderWidget)
