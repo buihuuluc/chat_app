@@ -59,20 +59,33 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Agora Flutter SDK'),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: _viewRows()),
-            ],
-          ),
+    // return MaterialApp(
+    //   home: Scaffold(
+    //     appBar: AppBar(
+    //       title: const Text('Agora Flutter SDK'),
+    //     ),
+    //     body: Container(
+    //       child: Column(
+    //         children: [
+    //           Container(
+    //               height: MediaQuery.of(context).size.height,
+    //               width: MediaQuery.of(context).size.width,
+    //               child: _viewRows()),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: _viewRows()),
+          ],
         ),
       ),
     );
@@ -202,7 +215,7 @@ class _CallScreenState extends State<CallScreen> {
   }
 
   Widget _viewRows() {
-    return Row(
+    return Column(
       children: <Widget>[
         for (final widget in _renderWidget)
           Expanded(
