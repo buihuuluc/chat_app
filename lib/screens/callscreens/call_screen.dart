@@ -23,6 +23,7 @@ class CallScreen extends StatefulWidget {
 
 class _CallScreenState extends State<CallScreen> {
   bool _isInChannel = false;
+  bool muted = false;
   static final _users = <int>[];
   final _infoStrings = <String>[];
   final CallMethods callMethods = CallMethods();
@@ -59,34 +60,20 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   home: Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text('Agora Flutter SDK'),
-    //     ),
-    //     body: Container(
-    //       child: Column(
-    //         children: [
-    //           Container(
-    //               height: MediaQuery.of(context).size.height,
-    //               width: MediaQuery.of(context).size.width,
-    //               child: _viewRows()),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-        child: Column(
-          children: [
-            Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: _viewRows()),
-          ],
-        ),
+        child: Stack(children: <Widget>[
+          Column(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: _viewRows()),
+            ],
+          ),
+          _toolbar(),
+        ]),
       ),
     );
   }
@@ -110,6 +97,67 @@ class _CallScreenState extends State<CallScreen> {
         }
       });
     });
+  }
+
+  Widget _toolbar() {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RawMaterialButton(
+            onPressed: _onToggleMute,
+            child: Icon(
+              muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
+              color: muted ? Colors.red : Colors.white,
+              size: 30.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.black26,
+            padding: const EdgeInsets.all(12.0),
+          ),
+          RawMaterialButton(
+            onPressed: () => callMethods.endCall(
+              call: widget.call,
+            ),
+            child: Icon(
+              Icons.call_end,
+              color: Colors.white,
+              size: 40.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.redAccent,
+            padding: const EdgeInsets.all(15.0),
+          ),
+          RawMaterialButton(
+            onPressed: _onSwitchCamera,
+            child: Icon(
+              CupertinoIcons.switch_camera,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.black26,
+            padding: const EdgeInsets.all(12.0),
+          )
+        ],
+      ),
+    );
+  }
+
+  void _onSwitchCamera() {
+    AgoraRtcEngine.switchCamera();
+  }
+
+  void _onToggleMute() {
+    setState(() {
+      muted = !muted;
+    });
+    AgoraRtcEngine.muteLocalAudioStream(muted);
   }
 
   Widget _voiceDropdown() {
