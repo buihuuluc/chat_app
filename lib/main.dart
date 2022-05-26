@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/image_upload_provider.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/home_screen.dart';
 import 'package:chat_app/screens/login_screen.dart';
 import 'package:chat_app/screens/search_screen.dart';
-// import 'package:chat_app/screens/login_screen.dart'; // Prj R
-import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,17 +21,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    //test đăng xuất
-    // ko bỏ dồng này sẽ bị đăng xuất vĩnh viễn =))
-    // _authMethods.signOut();
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider())
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: MaterialApp(
-        title: "New_Chat",
+        title: "Skype Clone",
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
@@ -44,7 +40,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasData) {
               return HomeScreen();
             } else {
-              return LoginScreen(); // page login test
+              return LoginScreen();
             }
           },
         ),
@@ -52,4 +48,21 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-// test
+
+class HomeWidget extends StatelessWidget {
+  final AuthMethods _authMethods = AuthMethods();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _authMethods.getUserDetails(),
+      builder: (context, AsyncSnapshot<User> snapshot) {
+        if (snapshot.hasData) {
+          return HomeScreen();
+        } else {
+          return LoginScreen();
+        }
+      },
+    );
+  }
+}

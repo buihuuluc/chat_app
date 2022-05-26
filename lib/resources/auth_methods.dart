@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/enum/user_state.dart';
 import 'package:chat_app/models/user.dart';
-import 'package:chat_app/utils/ultilities.dart';
+import 'package:chat_app/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthMethods {
@@ -30,7 +28,6 @@ class AuthMethods {
 
     DocumentSnapshot documentSnapshot =
         await _userCollection.document(currentUser.uid).get();
-
     return User.fromMap(documentSnapshot.data);
   }
 
@@ -46,16 +43,22 @@ class AuthMethods {
   }
 
   Future<FirebaseUser> signIn() async {
-    GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
-    GoogleSignInAuthentication _signInAuthentication =
-        await _signInAccount.authentication;
+    try {
+      GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
+      GoogleSignInAuthentication _signInAuthentication =
+          await _signInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: _signInAuthentication.accessToken,
-        idToken: _signInAuthentication.idToken);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: _signInAuthentication.accessToken,
+          idToken: _signInAuthentication.idToken);
 
-    FirebaseUser user = await _auth.signInWithCredential(credential);
-    return user;
+      FirebaseUser user = await _auth.signInWithCredential(credential);
+      return user;
+    } catch (e) {
+      print("Auth methods error");
+      print(e);
+      return null;
+    }
   }
 
   Future<bool> authenticateUser(FirebaseUser user) async {
@@ -105,6 +108,7 @@ class AuthMethods {
       await _auth.signOut();
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

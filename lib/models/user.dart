@@ -1,20 +1,20 @@
 class User {
-   String uid;
-   String name;
-   String email;
-   String username;
-   String status;
-   int state;
-   String profilePhoto;
+  String uid;
+  String name;
+  String email;
+  String username;
+  String status;
+  int state;
+  String profilePhoto;
 
   User({
-     this.uid,
-     this.name,
-     this.email,
-     this.username,
-     this.status,
-     this.state,
-     this.profilePhoto,
+    this.uid,
+    this.name,
+    this.email,
+    this.username,
+    this.status,
+    this.state,
+    this.profilePhoto,
   });
 
   Map toMap(User user) {
@@ -29,6 +29,7 @@ class User {
     return data;
   }
 
+  // Named constructor
   User.fromMap(Map<String, dynamic> mapData) {
     this.uid = mapData['uid'];
     this.name = mapData['name'];

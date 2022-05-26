@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/models/call.dart';
 
 class CallMethods {

@@ -1,6 +1,4 @@
-enum ViewState{
-
-  IDLE, // Nhàn Rỗi
-  LOADING, // Đang load
-
+enum ViewState {
+  IDLE,
+  LOADING,
 }

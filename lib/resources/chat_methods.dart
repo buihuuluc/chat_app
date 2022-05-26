@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/constant/strings.dart';
+import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/models/contact.dart';
-import 'package:chat_app/models/massage.dart';
-import 'package:chat_app/models/user.dart';
+import 'package:chat_app/models/message.dart';
+import 'package:meta/meta.dart';
 
 class ChatMethods {
   static final Firestore _firestore = Firestore.instance;
@@ -15,7 +15,8 @@ class ChatMethods {
       _firestore.collection(USERS_COLLECTION);
 
   Future<void> addMessageToDb(
-      Message message, User sender, User receiver) async {
+    Message message,
+  ) async {
     var map = message.toMap();
 
     await _messageCollection

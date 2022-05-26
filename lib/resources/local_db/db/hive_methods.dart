@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:chat_app/models/log.dart';
-import 'package:chat_app/models/log.dart';
 import 'package:chat_app/resources/local_db/interface/log_interface.dart';
 
 class HiveMethods implements LogInterface {
@@ -27,7 +26,7 @@ class HiveMethods implements LogInterface {
     // box.put("custom_key", logMap);
     int idOfInput = await box.add(logMap);
 
-    print("Thêm nhật ký của ${idOfInput.toString()} vào Hide Database");
+    print("Log added with id ${idOfInput.toString()} in Hive db");
 
     close();
 

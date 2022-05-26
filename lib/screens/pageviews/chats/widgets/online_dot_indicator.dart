@@ -9,7 +9,9 @@ class OnlineDotIndicator extends StatelessWidget {
   final String uid;
   final AuthMethods _authMethods = AuthMethods();
 
-  OnlineDotIndicator({@required this.uid});
+  OnlineDotIndicator({
+    @required this.uid,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +27,25 @@ class OnlineDotIndicator extends StatelessWidget {
     }
 
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.topRight,
       child: StreamBuilder<DocumentSnapshot>(
-        stream: _authMethods.getUserStream(uid: uid),
+        stream: _authMethods.getUserStream(
+          uid: uid,
+        ),
         builder: (context, snapshot) {
-          User _user;
+          User user;
+
           if (snapshot.hasData && snapshot.data.data != null) {
-            _user = User.fromMap(snapshot.data.data);
+            user = User.fromMap(snapshot.data.data);
           }
 
           return Container(
             height: 10,
             width: 10,
-            margin: EdgeInsets.only(right: 8, top: 8),
+            margin: EdgeInsets.only(right: 5, top: 5),
             decoration: BoxDecoration(
-              color: getColor(_user?.state),
               shape: BoxShape.circle,
+              color: getColor(user?.state),
             ),
           );
         },
