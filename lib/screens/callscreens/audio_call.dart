@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,6 +32,11 @@ class _AudioScreenState extends State<AudioScreen> {
   final CallMethods callMethods = CallMethods();
   UserProvider userProvider;
   StreamSubscription callStreamSubscription;
+
+  int seconds = 0;
+  int minute = 0;
+  int hour = 0;
+  Timer timer;
 
   /// remote user list
   final _remoteUsers = List<int>();
@@ -61,12 +69,90 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(children: <Widget>[
-        _viewColumn(),
-        _toolbar(),
-      ]),
+      backgroundColor: UniversalVariables.blackColor,
+      body: Center(
+        child: Stack(
+          children: <Widget>[_audioScreen(), _toolbar()],
+        ),
+      ),
     );
+  }
+
+  Widget _audioScreen() {
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 100),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              widget.call.receiverName,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            CachedImage(
+              widget.call.receiverPic,
+              isRound: true,
+              radius: 180,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Text(
+              _checkUserList().length >= 2
+                  ? "Đang gọi:" +
+                      '$hour' +
+                      ':' +
+                      '$minute' +
+                      ':' +
+                      '$seconds'.toUpperCase()
+                  : 'Đang chờ...',
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.6),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _checkUserList() {
+    final List<AgoraRenderWidget> list = [
+      AgoraRenderWidget(0, local: true, preview: true),
+    ];
+    _users.forEach((int uid) => list.add(AgoraRenderWidget(uid)));
+    list.length >= 2 ? _startCall() : false; //Xử lý kết thúc gọi
+    return list;
+  }
+
+  void _startCall() {
+    final isRunning = timer == null ? false : timer.isActive;
+
+    isRunning ? false : startTimer();
+  }
+
+  void _stopCall() {
+    timer.cancel();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        seconds++;
+        if (seconds >= 60) {
+          seconds = 0;
+          minute += 1;
+          if (minute >= 60) {
+            hour += 1;
+            minute = 0;
+          }
+        }
+      });
+    });
   }
 
   addPostFrameCallback() {
