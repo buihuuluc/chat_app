@@ -18,6 +18,7 @@ import 'package:chat_app/resources/auth_methods.dart';
 // import 'package:chat_app/screens/chat_screen/filter_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/screens/full_image.dart';
+import 'package:chat_app/utils/audio_utilities.dart';
 import 'package:chat_app/utils/call_utilities.dart';
 import 'package:chat_app/utils/permissions.dart';
 import 'package:chat_app/utils/utilities.dart';
@@ -548,7 +549,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           onPressed: () async =>
               await Permissions.cameraAndMicrophonePermissionsGranted()
-                  ? CallUtils.dial(
+                  ? AudioUtils.dial(
                       from: sender, to: widget.receiver, context: context)
                   : {},
         )
