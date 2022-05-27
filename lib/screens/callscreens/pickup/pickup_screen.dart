@@ -5,6 +5,7 @@ import 'package:chat_app/models/log.dart';
 import 'package:chat_app/resources/call_methods.dart';
 import 'package:chat_app/resources/local_db/repository/log_repository.dart';
 import 'package:chat_app/screens/callscreens/call_screen.dart';
+import 'package:chat_app/screens/callscreens/audio_call.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/utils/permissions.dart';
 
@@ -81,6 +82,23 @@ class _PickupScreenState extends State<PickupScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 IconButton(
+                    icon: Icon(Icons.video_call),
+                    color: Colors.green,
+                    onPressed: () async {
+                      isCallMissed = false;
+                      addToLocalStorage(callStatus: CALL_STATUS_RECEIVED);
+                      await Permissions.cameraAndMicrophonePermissionsGranted()
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CallScreen(call: widget.call),
+                              ),
+                            )
+                          : {};
+                    }),
+                SizedBox(width: 25),
+                IconButton(
                   icon: Icon(Icons.call_end),
                   color: Colors.redAccent,
                   onPressed: () async {
@@ -101,7 +119,7 @@ class _PickupScreenState extends State<PickupScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    CallScreen(call: widget.call),
+                                    AudioScreen(call: widget.call),
                               ),
                             )
                           : {};

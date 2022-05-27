@@ -47,6 +47,7 @@ class _AudioScreenState extends State<AudioScreen> {
     _initAgoraRtcEngine();
     _addAgoraEventHandlers();
     addPostFrameCallback();
+    startTimer();
     joinchanel();
   }
 
@@ -55,6 +56,7 @@ class _AudioScreenState extends State<AudioScreen> {
   void dispose() {
     // clear users
     _users.clear();
+    _stopCall();
     // destroy sdk
     AgoraRtcEngine.leaveChannel();
     AgoraRtcEngine.destroy();
@@ -87,14 +89,30 @@ class _AudioScreenState extends State<AudioScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              widget.call.receiverName,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+              "Calling: " +
+                  '$hour' +
+                  ':' +
+                  '$minute' +
+                  ':' +
+                  '$seconds'.toUpperCase(),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+              // _checkUserList().length >= 2
+              //     ? "Đang gọi:" +
+              //         '$hour' +
+              //         ':' +
+              //         '$minute' +
+              //         ':' +
+              //         '$seconds'.toUpperCase()
+              //     : 'Đang chờ...',
+              // style: TextStyle(
+              //   color: Colors.white.withOpacity(0.6),
+              // ),
             ),
             SizedBox(
               height: 50,
             ),
             CachedImage(
-              widget.call.receiverPic,
+              _users == 0 ? widget.call.callerPic : widget.call.receiverPic,
               isRound: true,
               radius: 180,
             ),
@@ -102,17 +120,8 @@ class _AudioScreenState extends State<AudioScreen> {
               height: 50,
             ),
             Text(
-              _checkUserList().length >= 2
-                  ? "Đang gọi:" +
-                      '$hour' +
-                      ':' +
-                      '$minute' +
-                      ':' +
-                      '$seconds'.toUpperCase()
-                  : 'Đang chờ...',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-              ),
+              _users == 0 ? widget.call.callerName : widget.call.receiverName,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
             ),
           ],
         ),
