@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:chat_app/screens/callscreens/call_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
@@ -415,7 +415,11 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Container()
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(Icons.record_voice_over),
+                  child: GestureDetector(
+                      child: Icon(
+                        CupertinoIcons.wand_stars,
+                      ),
+                      onTap: () {}),
                 ),
           isWriting
               ? Container()
@@ -467,6 +471,12 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       actions: <Widget>[
         IconButton(
+            icon: Icon(
+              CupertinoIcons.ant,
+              size: 20,
+            ),
+            onPressed: () {}),
+        IconButton(
           icon: Icon(
             Icons.video_call,
           ),
@@ -484,7 +494,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Icons.phone,
           ),
           onPressed: () {},
-        )
+        ),
       ],
     );
   }
