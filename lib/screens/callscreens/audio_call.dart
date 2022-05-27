@@ -69,62 +69,77 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
   @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: UniversalVariables.blackColor,
+  //     body: Center(
+  //       child: Stack(
+  //         children: <Widget>[_audioScreen(), _toolbar()],
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: UniversalVariables.blackColor,
-      body: Center(
-        child: Stack(
-          children: <Widget>[_audioScreen(), _toolbar()],
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage("assets/call_background/a.png"),
+        fit: BoxFit.cover,
+      )),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          child: Stack(
+            children: <Widget>[_audioScreen(), _toolbar()],
+          ),
         ),
       ),
     );
   }
 
   Widget _audioScreen() {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 100),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Calling: " +
-                  '$hour' +
-                  ':' +
-                  '$minute' +
-                  ':' +
-                  '$seconds'.toUpperCase(),
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
-              // _checkUserList().length >= 2
-              //     ? "Đang gọi:" +
-              //         '$hour' +
-              //         ':' +
-              //         '$minute' +
-              //         ':' +
-              //         '$seconds'.toUpperCase()
-              //     : 'Đang chờ...',
-              // style: TextStyle(
-              //   color: Colors.white.withOpacity(0.6),
-              // ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            CachedImage(
-              _users == 0 ? widget.call.callerPic : widget.call.receiverPic,
-              isRound: true,
-              radius: 180,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              _users == 0 ? widget.call.callerName : widget.call.receiverName,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: 100),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Calling: " +
+                '$hour' +
+                ':' +
+                '$minute' +
+                ':' +
+                '$seconds'.toUpperCase(),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+            // _checkUserList().length >= 2
+            //     ? "Đang gọi:" +
+            //         '$hour' +
+            //         ':' +
+            //         '$minute' +
+            //         ':' +
+            //         '$seconds'.toUpperCase()
+            //     : 'Đang chờ...',
+            // style: TextStyle(
+            //   color: Colors.white.withOpacity(0.6),
+            // ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          CachedImage(
+            _users == 0 ? widget.call.callerPic : widget.call.receiverPic,
+            isRound: true,
+            radius: 180,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            _users == 0 ? widget.call.callerName : widget.call.receiverName,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          ),
+        ],
       ),
     );
   }
@@ -197,12 +212,15 @@ class _AudioScreenState extends State<AudioScreen> {
             child: Icon(
               muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
               color: muted ? Colors.red : Colors.white,
-              size: 30.0,
+              size: 40.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
             fillColor: Colors.black26,
             padding: const EdgeInsets.all(12.0),
+          ),
+          SizedBox(
+            width: 50,
           ),
           RawMaterialButton(
             onPressed: () => callMethods.endCall(
@@ -218,18 +236,6 @@ class _AudioScreenState extends State<AudioScreen> {
             fillColor: Colors.redAccent,
             padding: const EdgeInsets.all(15.0),
           ),
-          RawMaterialButton(
-            onPressed: _onSwitchCamera,
-            child: Icon(
-              CupertinoIcons.switch_camera,
-              color: Colors.white,
-              size: 30.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.black26,
-            padding: const EdgeInsets.all(12.0),
-          )
         ],
       ),
     );
