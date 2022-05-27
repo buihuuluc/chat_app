@@ -58,8 +58,8 @@ class _CallScreenState extends State<CallScreen> {
   joinchanel() {
     _isInChannel = true;
     _toggleChannel();
-    muted = false;
-    _onToggleMute();
+    //muted = false;
+    // _onToggleMute();
   }
 
   @override
@@ -169,7 +169,6 @@ class _CallScreenState extends State<CallScreen> {
 
     AgoraRtcEngine.enableVideo();
     AgoraRtcEngine.enableAudio();
-    AgoraRtcEngine.muteLocalAudioStream(false);
     AgoraRtcEngine.setParameters(
         '{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}');
     AgoraRtcEngine.setChannelProfile(ChannelProfile.Communication);
