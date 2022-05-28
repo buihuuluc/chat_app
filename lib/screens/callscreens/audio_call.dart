@@ -83,7 +83,7 @@ class _AudioScreenState extends State<AudioScreen> {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: AssetImage("assets/call_background/a.png"),
+        image: AssetImage("assets/call_background/a.jpeg"),
         fit: BoxFit.cover,
       )),
       child: Scaffold(
