@@ -30,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       child: AppBar(
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: UniversalVariables.kPrimaryColor,
         elevation: 0,
         leading: leading,
         actions: actions,

@@ -99,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
 
     return Scaffold(
-      backgroundColor: UniversalVariables.blackColor,
+      backgroundColor: Colors.white,
       appBar: customAppBar(context),
       body: Column(
         children: <Widget>[
@@ -204,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
               BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.65),
           decoration: BoxDecoration(
-            color: UniversalVariables.senderColor,
+            color: UniversalVariables.kPrimaryColor,
             borderRadius: BorderRadius.only(
               topLeft: messageRadius,
               topRight: messageRadius,
@@ -219,7 +219,8 @@ class _ChatScreenState extends State<ChatScreen> {
         Container(
           padding: EdgeInsets.all(5),
           child: Text(partTime(message.timestamp),
-              style: TextStyle(color: Colors.white, fontSize: 12)
+              style:
+                  TextStyle(color: UniversalVariables.greyColor, fontSize: 12)
               // message.timestamp.toDate().month.toString()
               ),
         ),
@@ -316,7 +317,7 @@ class _ChatScreenState extends State<ChatScreen> {
       showModalBottomSheet(
           context: context,
           elevation: 0,
-          backgroundColor: UniversalVariables.blackColor,
+          backgroundColor: Colors.white,
           builder: (context) {
             return Column(
               children: <Widget>[
@@ -430,7 +431,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   focusNode: textFieldFocus,
                   onTap: () => hideEmojiContainer(),
                   style: TextStyle(
-                    color: Colors.white,
+                    color: UniversalVariables.blackColor,
                   ),
                   onChanged: (val) {
                     (val.length > 0 && val.trim() != "")
@@ -467,7 +468,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       hideEmojiContainer();
                     }
                   },
-                  icon: Icon(CupertinoIcons.smiley),
+                  icon: Icon(
+                    CupertinoIcons.smiley,
+                    color: UniversalVariables.greyColor,
+                  ),
                 ),
               ],
             ),
@@ -479,6 +483,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: GestureDetector(
                       child: Icon(
                         CupertinoIcons.wand_stars,
+                        color: UniversalVariables.greyColor,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -490,7 +495,10 @@ class _ChatScreenState extends State<ChatScreen> {
           isWriting
               ? Container()
               : GestureDetector(
-                  child: Icon(Icons.camera_alt),
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: UniversalVariables.greyColor,
+                  ),
                   onTap: () => pickImage(source: ImageSource.camera),
                 ),
           isWriting

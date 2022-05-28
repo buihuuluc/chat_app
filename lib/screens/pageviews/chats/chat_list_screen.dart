@@ -18,7 +18,7 @@ class ChatListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: Colors.white,
         appBar: SkypeAppBar(
           title: UserCircle(),
           actions: <Widget>[

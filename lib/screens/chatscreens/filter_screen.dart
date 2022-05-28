@@ -67,7 +67,6 @@ class _FillterScreenState extends State<FillterScreen> {
                               return print('miss');
                             }
                             cameraDeepArController.snapPhoto();
-                            messagebBox();
                           }),
                     ),
                   ),
@@ -114,14 +113,6 @@ class _FillterScreenState extends State<FillterScreen> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget messagebBox() {
-    return Center(
-      child: Container(
-        child: Text("Hello"),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/models/message.dart';
@@ -26,9 +27,9 @@ class LastMessageContainer extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
+                    color: UniversalVariables.greyColor,
+                    fontSize: 12,
+                    fontFamily: UniversalVariables.defaultFont),
               ),
             );
           }

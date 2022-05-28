@@ -38,8 +38,8 @@ class _SearchScreenState extends State<SearchScreen> {
     return NewGradientAppBar(
       gradient: LinearGradient(
         colors: [
-          UniversalVariables.gradientColorStart,
-          UniversalVariables.gradientColorEnd,
+          UniversalVariables.kPrimaryColor,
+          UniversalVariables.kPrimaryColor,
         ],
       ),
       leading: IconButton(
@@ -58,7 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 query = val;
               });
             },
-            cursorColor: UniversalVariables.blackColor,
+            cursorColor: Colors.white,
             autofocus: true,
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -153,7 +153,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: Colors.white,
         appBar: searchAppBar(context),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),

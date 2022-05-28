@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: Colors.white,
         body: PageView(
           children: <Widget>[
             ChatListScreen(),
@@ -122,34 +122,36 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: CupertinoTabBar(
-              backgroundColor: UniversalVariables.blackColor,
+              backgroundColor: Colors.white,
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.chat,
                       color: (_page == 0)
-                          ? UniversalVariables.lightBlueColor
+                          ? UniversalVariables.kPrimaryColor
                           : UniversalVariables.greyColor),
                   title: Text(
                     "Chats",
                     style: TextStyle(
                         fontSize: _labelFontSize,
+                        fontFamily: UniversalVariables.defaultFont,
                         color: (_page == 0)
-                            ? UniversalVariables.lightBlueColor
-                            : Colors.grey),
+                            ? UniversalVariables.kPrimaryColor
+                            : UniversalVariables.greyColor),
                   ),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.call,
                       color: (_page == 1)
-                          ? UniversalVariables.lightBlueColor
+                          ? UniversalVariables.kPrimaryColor
                           : UniversalVariables.greyColor),
                   title: Text(
                     "Call Logs",
                     style: TextStyle(
                         fontSize: _labelFontSize,
+                        fontFamily: UniversalVariables.defaultFont,
                         color: (_page == 1)
-                            ? UniversalVariables.lightBlueColor
-                            : Colors.grey),
+                            ? UniversalVariables.kPrimaryColor
+                            : UniversalVariables.greyColor),
                   ),
                 ),
               ],

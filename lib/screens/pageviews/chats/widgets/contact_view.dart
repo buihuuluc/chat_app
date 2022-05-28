@@ -8,7 +8,7 @@ import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/screens/chatscreens/chat_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
-
+import 'package:chat_app/utils/universal_variables.dart';
 import 'last_message_container.dart';
 import 'online_dot_indicator.dart';
 
@@ -61,8 +61,10 @@ class ViewLayout extends StatelessWidget {
           )),
       title: Text(
         (contact != null ? contact.name : null) != null ? contact.name : "..",
-        style:
-            TextStyle(color: Colors.white, fontFamily: "Arial", fontSize: 19),
+        style: TextStyle(
+            color: UniversalVariables.blackColor,
+            fontFamily: UniversalVariables.defaultFont,
+            fontSize: 19),
       ),
       subtitle: LastMessageContainer(
         stream: _chatMethods.fetchLastMessageBetween(
