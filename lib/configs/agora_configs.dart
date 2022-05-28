@@ -1,4 +1,3 @@
 const APP_ID = '2b4b76e458cf439aa7cd313b9504f0a4';
-const Token =
-    "006f9a22df2ddd940dc9e9fd5a5f4269441IAApeHUAekpVF/FEskwD890t0JGD67Fd692soAwL1nEyVMJBJDUAAAAAEAAv13+tBSCPYgEAAQAFII9i";
-// const Agora_id = '2b4b76e458cf439aa7cd313b9504f0a4';
+const AR_KEY =
+    'a21a7ff01601b5e28e40105f3de6420ffa9ab4af82a11e3e15334bceb61eb636db5138be39da2a24';

@@ -15,7 +15,7 @@ import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/image_upload_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
 // import 'package:chat_app/screens/arcore_screen.dart';
-// import 'package:chat_app/screens/chat_screen/filter_screen.dart';
+import 'package:chat_app/screens/chatscreens/filter_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/screens/full_image.dart';
 import 'package:chat_app/utils/audio_utilities.dart';
@@ -481,7 +481,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         CupertinoIcons.wand_stars,
                       ),
                       onTap: () {
-                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>FillterScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FillterScreen()));
                       }),
                 ),
           isWriting
