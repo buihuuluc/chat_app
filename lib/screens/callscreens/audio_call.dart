@@ -105,24 +105,8 @@ class _AudioScreenState extends State<AudioScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Calling: " +
-                '$hour' +
-                ':' +
-                '$minute' +
-                ':' +
-                '$seconds'.toUpperCase(),
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
-            // _checkUserList().length >= 2
-            //     ? "Đang gọi:" +
-            //         '$hour' +
-            //         ':' +
-            //         '$minute' +
-            //         ':' +
-            //         '$seconds'.toUpperCase()
-            //     : 'Đang chờ...',
-            // style: TextStyle(
-            //   color: Colors.white.withOpacity(0.6),
-            // ),
+            _users == 0 ? widget.call.callerName : widget.call.receiverName,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 50,
@@ -136,8 +120,13 @@ class _AudioScreenState extends State<AudioScreen> {
             height: 50,
           ),
           Text(
-            _users == 0 ? widget.call.callerName : widget.call.receiverName,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            "Calling: " +
+                '$hour' +
+                ':' +
+                '$minute' +
+                ':' +
+                '$seconds'.toUpperCase(),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
           ),
         ],
       ),
