@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:chat_app/configs/agora_configs.dart';
+import 'package:chat_app/configs/api_keys.dart';
 import 'package:chat_app/models/call.dart';
 import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/resources/call_methods.dart';
@@ -106,7 +106,10 @@ class _AudioScreenState extends State<AudioScreen> {
         children: <Widget>[
           Text(
             _users == 0 ? widget.call.callerName : widget.call.receiverName,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+                color: UniversalVariables.whiteColor.withOpacity(0.7)),
           ),
           SizedBox(
             height: 50,
@@ -126,7 +129,10 @@ class _AudioScreenState extends State<AudioScreen> {
                 '$minute' +
                 ':' +
                 '$seconds'.toUpperCase(),
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+            style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w400,
+                color: UniversalVariables.whiteColor.withOpacity(0.7)),
           ),
         ],
       ),
@@ -200,7 +206,9 @@ class _AudioScreenState extends State<AudioScreen> {
             onPressed: _onToggleMute,
             child: Icon(
               muted ? CupertinoIcons.mic_off : CupertinoIcons.mic,
-              color: muted ? Colors.red : Colors.white,
+              color: muted
+                  ? Colors.red.withOpacity(0.7)
+                  : Colors.white.withOpacity(0.7),
               size: 40.0,
             ),
             shape: CircleBorder(),
@@ -217,12 +225,12 @@ class _AudioScreenState extends State<AudioScreen> {
             ),
             child: Icon(
               Icons.call_end,
-              color: Colors.white,
+              color: UniversalVariables.whiteColor,
               size: 40.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: Colors.redAccent,
+            fillColor: Colors.redAccent.withOpacity(0.6),
             padding: const EdgeInsets.all(15.0),
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/constants/strings.dart';
@@ -69,9 +70,9 @@ class _PickupScreenState extends State<PickupScreen> {
               Text(
                 widget.call.callerName,
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: UniversalVariables.whiteColor.withOpacity(0.8)),
               ),
               SizedBox(height: 50),
               CachedImage(
@@ -83,8 +84,8 @@ class _PickupScreenState extends State<PickupScreen> {
               Text(
                 "Calling...",
                 style: TextStyle(
-                  fontSize: 25,
-                ),
+                    fontSize: 25,
+                    color: UniversalVariables.whiteColor.withOpacity(0.7)),
               ),
               SizedBox(height: 50),
               Container(
@@ -97,12 +98,13 @@ class _PickupScreenState extends State<PickupScreen> {
                     RawMaterialButton(
                         child: Icon(
                           Icons.video_call,
-                          color: Colors.white,
+                          color: UniversalVariables.whiteColor,
                           size: 40.0,
                         ),
                         shape: CircleBorder(),
                         elevation: 2.0,
-                        fillColor: Colors.lightGreen,
+                        fillColor:
+                            UniversalVariables.kPrimaryColor.withOpacity(0.5),
                         padding: const EdgeInsets.all(10.0),
                         onPressed: () async {
                           isCallMissed = false;
@@ -123,11 +125,11 @@ class _PickupScreenState extends State<PickupScreen> {
                       child: Icon(
                         Icons.call_end,
                         size: 40.0,
-                        color: Colors.white,
+                        color: UniversalVariables.whiteColor,
                       ),
                       shape: CircleBorder(),
                       elevation: 2.0,
-                      fillColor: Colors.redAccent,
+                      fillColor: Colors.redAccent.withOpacity(0.7),
                       padding: const EdgeInsets.all(15.0),
                       onPressed: () async {
                         isCallMissed = false;
@@ -139,12 +141,13 @@ class _PickupScreenState extends State<PickupScreen> {
                     RawMaterialButton(
                         child: Icon(
                           Icons.call,
-                          color: Colors.white,
+                          color: UniversalVariables.whiteColor,
                           size: 40.0,
                         ),
                         shape: CircleBorder(),
                         elevation: 2.0,
-                        fillColor: Colors.lightGreen,
+                        fillColor:
+                            UniversalVariables.kPrimaryColor.withOpacity(0.5),
                         padding: const EdgeInsets.all(10.0),
                         onPressed: () async {
                           isCallMissed = false;
