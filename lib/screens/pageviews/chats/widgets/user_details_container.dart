@@ -37,7 +37,7 @@ class UserDetailsContainer extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.only(top: 25),
+      margin: EdgeInsets.only(top: 16),
       child: Column(
         children: <Widget>[
           CustomAppBar(

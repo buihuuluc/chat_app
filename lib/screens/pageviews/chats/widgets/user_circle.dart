@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/provider/user_provider.dart';
@@ -34,7 +35,7 @@ class UserCircle extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: UniversalVariables.kPrimaryColor,
-                  fontSize: 13,
+                  fontSize: 16,
                 ),
               ),
             ),

@@ -527,19 +527,22 @@ class _ChatScreenState extends State<ChatScreen> {
       centerTitle: false,
       title: Text(
         widget.receiver.name,
+        style: TextStyle(
+          fontFamily: UniversalVariables.defaultFont,
+        ),
       ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            CupertinoIcons.ant,
-            size: 20,
-            color: UniversalVariables.whiteColor,
-          ),
-          // onPressed: () {
-          //   Navigator.push(context,
-          //       MaterialPageRoute(builder: (context) => ArrCoreScreen()));
-          // }
-        ),
+        // IconButton(
+        //   icon: Icon(
+        //     Icons.adb,
+        //     size: 20,
+        //     color: UniversalVariables.whiteColor,
+        //   ),
+        // onPressed: () {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => ArrCoreScreen()));
+        // }
+        // ),
         IconButton(
           icon: Icon(
             CupertinoIcons.video_camera,

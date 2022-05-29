@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:chat_app/utils/universal_variables.dart';
 
 class FullImageScreen extends StatelessWidget {
   String photoUrl;
@@ -8,15 +9,19 @@ class FullImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: UniversalVariables.kPrimaryColor,
         title: Text(
           'Images Full Size',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: UniversalVariables.whiteColor),
         ),
         centerTitle: true,
       ),
       body: Container(
+        decoration: BoxDecoration(
+          color: UniversalVariables.whiteColor,
+        ),
         child: PhotoView(
           imageProvider: NetworkImage(photoUrl),
         ),
