@@ -56,9 +56,9 @@ class UserDetailsContainer extends StatelessWidget {
                 child: Text(
                   "Sign Out",
                   style: TextStyle(
-                      color: UniversalVariables.whiteColor, fontSize: 12),
+                      color: UniversalVariables.whiteColor, fontSize: 15),
                 ),
-              )
+              ),
             ],
           ),
           UserDetailsBody(),
@@ -78,37 +78,77 @@ class UserDetailsBody extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
         children: [
+          Text(
+            user.name,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: UniversalVariables.blackColor,
+                fontFamily: UniversalVariables.defaultFont),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // CachedImage(
-              //   user.profilePhoto,
-              //   isRound: true,
-              //   radius: 50,
-              // ),
-              SizedBox(width: 15),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    user.name,
+                    "Email: ",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: UniversalVariables.blueColor,
-                    ),
+                        fontSize: 14,
+                        color: UniversalVariables.lightBlueColor,
+                        fontFamily: UniversalVariables.defaultFont),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    "Email: " + user.email,
+                    "Username: ",
                     style: TextStyle(
-                        fontSize: 14, color: UniversalVariables.blackColor),
+                        fontSize: 14,
+                        color: UniversalVariables.lightBlueColor,
+                        fontFamily: UniversalVariables.defaultFont),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Text(
-                    "Username: " + user.username,
+                    "Phone: ",
                     style: TextStyle(
-                        fontSize: 14, color: UniversalVariables.blackColor),
+                        fontSize: 14,
+                        color: UniversalVariables.lightBlueColor,
+                        fontFamily: UniversalVariables.defaultFont),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(user.email,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: UniversalVariables.blackColor,
+                          fontFamily: UniversalVariables.defaultFont)),
+                  SizedBox(height: 5),
+                  Text(user.username,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: UniversalVariables.blackColor,
+                          fontFamily: UniversalVariables.defaultFont)),
+                  SizedBox(
+                    height: 5,
                   ),
+                  Text(
+                    user.phone,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: UniversalVariables.blackColor,
+                        fontFamily: UniversalVariables.defaultFont),
+                  )
                 ],
               ),
             ],
@@ -125,6 +165,47 @@ class UserDetailsBody extends StatelessWidget {
               ),
             ),
           ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Address: ",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: UniversalVariables.lightBlueColor,
+                        fontFamily: UniversalVariables.defaultFont)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Company: ",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: UniversalVariables.lightBlueColor,
+                        fontFamily: UniversalVariables.defaultFont))
+              ],
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(user.add,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: UniversalVariables.blackColor,
+                        fontFamily: UniversalVariables.defaultFont)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(user.company,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: UniversalVariables.blackColor,
+                        fontFamily: UniversalVariables.defaultFont))
+              ],
+            )
+          ]),
         ],
       ),
     );

@@ -31,16 +31,7 @@ class UserCircle extends StatelessWidget {
           children: <Widget>[
             Align(
               alignment: Alignment.center,
-              child:
-                  // Text(
-                  //   Utils.getInitials(userProvider.getUser.name),
-                  //   style: TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     color: UniversalVariables.kPrimaryColor,
-                  //     fontSize: 16,
-                  //   ),
-                  // ),
-                  CachedImage(
+              child: CachedImage(
                 user.profilePhoto,
                 isRound: true,
                 radius: 40,
