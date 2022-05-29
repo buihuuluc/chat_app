@@ -20,10 +20,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: UniversalVariables.blackColor,
+        color: UniversalVariables.kPrimaryColor,
         border: Border(
           bottom: BorderSide(
-            color: UniversalVariables.separatorColor,
+            color: UniversalVariables.kPrimaryColor,
             width: 1.4,
             style: BorderStyle.solid,
           ),

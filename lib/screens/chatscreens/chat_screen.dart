@@ -121,7 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   emojiContainer() {
     return EmojiPicker(
-      bgColor: UniversalVariables.separatorColor,
+      bgColor: Colors.white,
       indicatorColor: UniversalVariables.blueColor,
       rows: 3,
       columns: 7,
@@ -271,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.65),
             decoration: BoxDecoration(
-              color: UniversalVariables.receiverColor,
+              color: Colors.black26,
               borderRadius: BorderRadius.only(
                 bottomRight: messageRadius,
                 topRight: messageRadius,
@@ -408,17 +408,22 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.all(10),
       child: Row(
         children: <Widget>[
-          GestureDetector(
-            onTap: () => addMediaModal(context),
-            child: Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                gradient: UniversalVariables.fabGradient,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.add),
-            ),
-          ),
+          isWriting
+              ? Container
+              : GestureDetector(
+                  onTap: () => addMediaModal(context),
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: UniversalVariables.kPrimaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
           SizedBox(
             width: 5,
           ),
@@ -431,29 +436,32 @@ class _ChatScreenState extends State<ChatScreen> {
                   focusNode: textFieldFocus,
                   onTap: () => hideEmojiContainer(),
                   style: TextStyle(
-                    color: UniversalVariables.blackColor,
+                    color: Colors.white,
                   ),
                   onChanged: (val) {
                     (val.length > 0 && val.trim() != "")
                         ? setWritingTo(true)
                         : setWritingTo(false);
                   },
+                  // Input field
                   decoration: InputDecoration(
                     hintText: "Nhập tin nhắn...",
                     hintStyle: TextStyle(
                       color: UniversalVariables.greyColor,
                     ),
                     border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(50.0),
-                        ),
-                        borderSide: BorderSide.none),
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(50.0),
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     filled: true,
-                    fillColor: UniversalVariables.separatorColor,
+                    fillColor: UniversalVariables.inputColor,
                   ),
                 ),
+                // Icon Smile
                 IconButton(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -476,6 +484,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
+          // Icon to DeepAr
           isWriting
               ? Container()
               : Padding(
@@ -492,6 +501,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 builder: (context) => FillterScreen()));
                       }),
                 ),
+          // Icon to Camera
           isWriting
               ? Container()
               : GestureDetector(
@@ -501,16 +511,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   onTap: () => pickImage(source: ImageSource.camera),
                 ),
+          // Icon Send
           isWriting
               ? Container(
                   margin: EdgeInsets.only(left: 10),
                   decoration: BoxDecoration(
-                      gradient: UniversalVariables.fabGradient,
+                      color: UniversalVariables.kPrimaryColor,
                       shape: BoxShape.circle),
                   child: IconButton(
                     icon: Icon(
                       Icons.send,
                       size: 15,
+                      color: Colors.white,
                     ),
                     onPressed: () => sendMessage(),
                   ))
@@ -533,6 +545,7 @@ class _ChatScreenState extends State<ChatScreen> {
       centerTitle: false,
       title: Text(
         widget.receiver.name,
+        style: TextStyle(fontFamily: UniversalVariables.defaultFont),
       ),
       actions: <Widget>[
         IconButton(
@@ -623,10 +636,10 @@ class ModalTile extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 18,
-          ),
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: UniversalVariables.defaultFont),
         ),
       ),
     );

@@ -40,7 +40,6 @@ class ChatListScreen extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: NewChatButton(),
         body: ChatListContainer(),
       ),
     );

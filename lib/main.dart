@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/search_screen': (context) => SearchScreen(),
         },
-        theme: ThemeData(brightness: Brightness.dark),
+        theme: ThemeData(brightness: Brightness.light),
         home: FutureBuilder(
           future: _authMethods.getCurrentUser(),
           builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {

@@ -17,8 +17,8 @@ class QuietBox extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25),
         child: Container(
-          color: UniversalVariables.separatorColor,
-          padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
+          color: UniversalVariables.kPrimaryColor,
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

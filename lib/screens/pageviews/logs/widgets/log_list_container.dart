@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/constants/strings.dart';
 import 'package:chat_app/models/log.dart';
@@ -22,7 +23,7 @@ class _LogListContainerState extends State<LogListContainer> {
         _icon = Icon(
           Icons.call_made,
           size: _iconSize,
-          color: Colors.green,
+          color: UniversalVariables.kPrimaryColor,
         );
         break;
 
@@ -38,7 +39,7 @@ class _LogListContainerState extends State<LogListContainer> {
         _icon = Icon(
           Icons.call_received,
           size: _iconSize,
-          color: Colors.grey,
+          color: UniversalVariables.greyColor,
         );
         break;
     }
@@ -122,11 +123,6 @@ class _LogListContainerState extends State<LogListContainer> {
             subtitle: "Calling people all over the world with just one click",
           );
         }
-
-        return QuietBox(
-          heading: "This is where all your call logs are listed",
-          subtitle: "Calling people all over the world with just one click",
-        );
       },
     );
   }
