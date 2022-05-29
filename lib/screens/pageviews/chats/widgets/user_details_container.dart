@@ -206,6 +206,55 @@ class UserDetailsBody extends StatelessWidget {
               ],
             )
           ]),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Row(
+                children: [
+                  Image.network(
+                    "https://www.facebook.com/images/fb_icon_325x325.png",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.network(
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.network(
+                    "https://freesvg.org/img/1534129544.png",
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.network(
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/2048px-LinkedIn_icon_circle.svg.png",
+                    width: 50,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.network(
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/1200px-Telegram_2019_Logo.svg.png",
+                    height: 50,
+                    width: 50,
+                  )
+                ],
+              ),
+            ],
+          )
         ],
       ),
     );
