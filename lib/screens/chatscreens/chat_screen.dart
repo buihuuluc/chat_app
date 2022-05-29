@@ -61,7 +61,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   bool isWriting = false;
   bool showEmojiPicker = false;
-
   @override
   void initState() {
     super.initState();
@@ -192,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget senderLayout(Message message) {
-    Radius messageRadius = Radius.circular(10);
+    Radius messageRadius = Radius.circular(15);
 
     //Trả về khối tin nhắn sender
     return Column(
@@ -205,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
               BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.65),
           decoration: BoxDecoration(
-            color: UniversalVariables.kPrimaryColor.withOpacity(0.7),
+            color: UniversalVariables.kPrimaryColor.withOpacity(0.6),
             borderRadius: BorderRadius.only(
               topLeft: messageRadius,
               topRight: messageRadius,
@@ -244,7 +243,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: CachedImage(
                   message.photoUrl,
                   width: 250,
-                  height: 250,
+                  height: 200,
                   radius: 5,
                 ),
                 onTap: () {
@@ -260,7 +259,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // Widget bố cục tin nhắn phía người nhận
   Widget receiverLayout(Message message) {
-    Radius messageRadius = Radius.circular(10);
+    Radius messageRadius = Radius.circular(15);
     bool flag = null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.65),
             decoration: BoxDecoration(
-              color: UniversalVariables.greyColor.withOpacity(0.4),
+              color: UniversalVariables.greyColor.withOpacity(0.3),
               borderRadius: BorderRadius.only(
                 bottomRight: messageRadius,
                 topRight: messageRadius,
@@ -358,6 +357,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () => pickImage(source: ImageSource.gallery),
                       ),
                       ModalTile(
+                        title: "Camera",
+                        subtitle: "Truy cập camera",
+                        icon: Icons.camera_alt,
+                        onTap: () => pickImage(source: ImageSource.camera),
+                      ),
+                      ModalTile(
                           title: "DeepAR",
                           subtitle: "Truy cập camera DeepAR",
                           icon: CupertinoIcons.wand_stars,
@@ -368,23 +373,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                     builder: (context) => FillterScreen()));
                           }),
                       ModalTile(
-                        title: "Camera",
-                        subtitle: "Truy cập camera",
-                        icon: Icons.camera_alt,
-                        onTap: () => pickImage(source: ImageSource.camera),
-                      ),
-                      ModalTile(
-                          title: "Vị trí",
-                          subtitle: "Chia sẻ vị trí của bạn",
-                          icon: Icons.add_location),
+                          title: "ARCore",
+                          subtitle: "Mô hình ARCore",
+                          icon: Icons.adb),
                       ModalTile(
                           title: "Lịch",
                           subtitle: "Sắp xếp một cuộc gọi và nhận lời nhắc",
                           icon: Icons.schedule),
                       ModalTile(
-                          title: "Tạo bình chọn",
-                          subtitle: "Tạo một cuộc bình chọn",
-                          icon: Icons.poll)
+                          title: "Vị trí",
+                          subtitle: "Gửi vị trí hiện tại",
+                          icon: Icons.pin_drop)
                     ],
                   ),
                 ),
@@ -418,22 +417,20 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.all(10),
       child: Row(
         children: <Widget>[
-          !isWriting
-              ? GestureDetector(
-                  onTap: () => addMediaModal(context),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: UniversalVariables.kPrimaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      color: UniversalVariables.whiteColor,
-                    ),
-                  ),
-                )
-              : Container(),
+          GestureDetector(
+            onTap: () => addMediaModal(context),
+            child: Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: UniversalVariables.kPrimaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.add,
+                color: UniversalVariables.whiteColor,
+              ),
+            ),
+          ),
           SizedBox(
             width: 5,
           ),
@@ -444,10 +441,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 TextField(
                   controller: textFieldController,
                   focusNode: textFieldFocus,
-                  onTap: () => hideEmojiContainer(),
-                  style: TextStyle(
-                    color: UniversalVariables.blackColor,
-                  ),
+                  onTap: () {
+                    hideEmojiContainer();
+                  },
+                  style: TextStyle(color: UniversalVariables.blackColor),
                   onChanged: (val) {
                     (val.length > 0 && val.trim() != "")
                         ? setWritingTo(true)
@@ -486,9 +483,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     }
                   },
                   icon: Icon(
-                    CupertinoIcons.smiley,
+                    CupertinoIcons.smiley_fill,
                     color: showEmojiPicker
-                        ? UniversalVariables.kPrimaryColor
+                        ? UniversalVariables.smileEmojiColor
                         : UniversalVariables.greyColor,
                   ),
                 ),
@@ -497,10 +494,13 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           // Send button
           Container(
-              margin: EdgeInsets.only(left: 10),
+              width: 46,
+              height: 46,
+              margin: EdgeInsets.only(left: 6),
               decoration: BoxDecoration(
-                  color: UniversalVariables.kPrimaryColor,
-                  shape: BoxShape.circle),
+                color: UniversalVariables.kPrimaryColor,
+                shape: BoxShape.circle,
+              ),
               child: IconButton(
                 icon: Icon(
                   Icons.send,

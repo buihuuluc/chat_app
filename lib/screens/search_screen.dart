@@ -43,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.white),
+        icon: Icon(Icons.arrow_back, color: UniversalVariables.whiteColor),
         onPressed: () => Navigator.pop(context),
       ),
       elevation: 0,
@@ -58,11 +58,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 query = val;
               });
             },
-            cursorColor: Colors.white,
+            cursorColor: UniversalVariables.whiteColor,
             autofocus: true,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: UniversalVariables.whiteColor,
               fontSize: 35,
             ),
             decoration: InputDecoration(
@@ -74,11 +74,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
               ),
               border: InputBorder.none,
-              hintText: "Search",
+              hintText: " Search",
               hintStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 35,
-                color: UniversalVariables.greyColor,
+                color: UniversalVariables.whiteColor,
               ),
             ),
           ),
@@ -126,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
           },
           leading: CachedImage(
             searchedUser.profilePhoto,
-            radius: 25,
+            radius: 48,
             isRound: true,
           ),
           // leading: CircleAvatar(
@@ -136,13 +136,13 @@ class _SearchScreenState extends State<SearchScreen> {
           title: Text(
             searchedUser.username,
             style: TextStyle(
-              color: Colors.white,
+              color: UniversalVariables.blackColor,
               fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Text(
-            searchedUser.name,
-            style: TextStyle(color: UniversalVariables.greyColor),
+            'Nickname: ' + searchedUser.name,
+            style: TextStyle(color: UniversalVariables.blueColor),
           ),
         );
       }),

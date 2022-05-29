@@ -9,7 +9,7 @@ import 'package:chat_app/screens/pageviews/chats/widgets/contact_view.dart';
 import 'package:chat_app/screens/pageviews/chats/widgets/quiet_box.dart';
 import 'package:chat_app/screens/pageviews/chats/widgets/user_circle.dart';
 import 'package:chat_app/utils/universal_variables.dart';
-import 'package:chat_app/widgets/skype_appbar.dart';
+import 'package:chat_app/widgets/chat_appbar.dart';
 
 import 'widgets/new_chat_button.dart';
 
@@ -18,14 +18,14 @@ class ChatListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: UniversalVariables.whiteColor,
         appBar: SkypeAppBar(
           title: UserCircle(),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: UniversalVariables.whiteColor,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, "/search_screen");
@@ -34,7 +34,7 @@ class ChatListScreen extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.more_vert,
-                color: Colors.white,
+                color: UniversalVariables.whiteColor,
               ),
               onPressed: () {},
             ),

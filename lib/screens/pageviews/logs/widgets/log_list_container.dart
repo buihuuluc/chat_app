@@ -73,7 +73,7 @@ class _LogListContainerState extends State<LogListContainer> {
                   leading: CachedImage(
                     hasDialled ? _log.receiverPic : _log.callerPic,
                     isRound: true,
-                    radius: 45,
+                    radius: 48,
                   ),
                   mini: false,
                   onLongPress: () => showDialog(
@@ -104,14 +104,14 @@ class _LogListContainerState extends State<LogListContainer> {
                     hasDialled ? _log.receiverName : _log.callerName,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 17,
+                      fontSize: 18,
                     ),
                   ),
                   icon: getIcon(_log.callStatus),
                   subtitle: Text(
                     Utils.formatDateString(_log.timestamp),
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                     ),
                   ),
                 );

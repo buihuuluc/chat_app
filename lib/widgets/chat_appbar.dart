@@ -2,6 +2,7 @@ import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/screens/pageviews/chats/widgets/user_circle.dart';
 import 'package:chat_app/widgets/appbar.dart';
+import 'package:chat_app/screens/pageviews/logs/log_screen.dart';
 
 class SkypeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final title;

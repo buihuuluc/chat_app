@@ -12,7 +12,7 @@ class UniversalVariables {
 
   static final Color gradientColorStart = Color(0xff00b6f3);
   static final Color gradientColorEnd = Color(0xff0184dc);
-
+  static final Color smileEmojiColor = Color(0xFFFFCC00);
   static final Color senderColor = Color(0xff2b343b);
   static final Color receiverColor = Color(0xff1e2225);
   static final Color inputColor = Color(0x7366D8A7);
