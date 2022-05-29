@@ -75,33 +75,55 @@ class UserDetailsBody extends StatelessWidget {
     final User user = userProvider.getUser;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Row(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: Column(
         children: [
-          CachedImage(
-            user.profilePhoto,
-            isRound: true,
-            radius: 50,
-          ),
-          SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                user.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: UniversalVariables.blackColor,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                user.email,
-                style: TextStyle(
-                    fontSize: 14, color: UniversalVariables.blackColor),
+          Row(
+            children: [
+              // CachedImage(
+              //   user.profilePhoto,
+              //   isRound: true,
+              //   radius: 50,
+              // ),
+              SizedBox(width: 15),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    user.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: UniversalVariables.blueColor,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Email: " + user.email,
+                    style: TextStyle(
+                        fontSize: 14, color: UniversalVariables.blackColor),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Username: " + user.username,
+                    style: TextStyle(
+                        fontSize: 14, color: UniversalVariables.blackColor),
+                  ),
+                ],
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(30),
+            child: Container(
+              height: 300,
+              width: 300,
+              child: CachedImage(
+                user.profilePhoto,
+                isRound: true,
+                radius: 300,
+              ),
+            ),
           ),
         ],
       ),
