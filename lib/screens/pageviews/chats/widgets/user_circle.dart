@@ -15,7 +15,7 @@ class UserCircle extends StatelessWidget {
       onTap: () => showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        backgroundColor: UniversalVariables.blackColor,
+        backgroundColor: UniversalVariables.whiteColor,
         builder: (context) => UserDetailsContainer(),
       ),
       child: Container(
@@ -23,7 +23,7 @@ class UserCircle extends StatelessWidget {
         width: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: UniversalVariables.separatorColor,
+          color: UniversalVariables.whiteColor,
         ),
         child: Stack(
           children: <Widget>[
@@ -33,7 +33,7 @@ class UserCircle extends StatelessWidget {
                 Utils.getInitials(userProvider.getUser.name),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: UniversalVariables.lightBlueColor,
+                  color: UniversalVariables.kPrimaryColor,
                   fontSize: 13,
                 ),
               ),
@@ -46,7 +46,7 @@ class UserCircle extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                      color: UniversalVariables.blackColor, width: 2),
+                      color: UniversalVariables.blackColor, width: 1),
                   color: UniversalVariables.onlineDotColor,
                 ),
               ),

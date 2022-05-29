@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UniversalVariables {
+  static final Color whiteColor = Color(0xFFFFFFFF);
   static final Color blueColor = Color(0xff2b9ed4);
   static final Color blackColor = Color(0xff19191b);
   static final Color greyColor = Color(0xff8f8f8f);
@@ -14,7 +15,7 @@ class UniversalVariables {
 
   static final Color senderColor = Color(0xff2b343b);
   static final Color receiverColor = Color(0xff1e2225);
-  static final Color inputColor = Color(0xFF66D8A7);
+  static final Color inputColor = Color(0x7366D8A7);
   static const kPrimaryColor = Color(0xFF00BF6D);
   static const kSecondaryColor = Color(0xFFFE9901);
   static const kContentColorLightTheme = Color(0xFF1D1D35);

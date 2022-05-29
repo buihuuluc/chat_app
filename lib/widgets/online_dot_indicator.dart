@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/enum/user_state.dart';
@@ -18,7 +19,7 @@ class OnlineDotIndicator extends StatelessWidget {
         case UserState.Offline:
           return Colors.red;
         case UserState.Online:
-          return Colors.green;
+          return UniversalVariables.kPrimaryColor;
         default:
           return Colors.orange;
       }

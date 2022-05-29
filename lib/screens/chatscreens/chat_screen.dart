@@ -17,18 +17,19 @@ import 'package:chat_app/resources/auth_methods.dart';
 // import 'package:chat_app/screens/arcore_screen.dart';
 import 'package:chat_app/screens/chatscreens/filter_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
-import 'package:chat_app/screens/full_image.dart';
-import 'package:chat_app/utils/audio_utilities.dart';
+import 'package:chat_app/screens/full_Image.dart';
 import 'package:chat_app/utils/call_utilities.dart';
 import 'package:chat_app/utils/permissions.dart';
 import 'package:chat_app/utils/utilities.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:chat_app/widgets/appbar.dart';
 import 'package:chat_app/widgets/custom_tile.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:chat_app/screens/callscreens/audio_call.dart';
+import 'package:chat_app/utils/audio_utilities.dart';
 import 'package:chat_app/resources/chat_methods.dart';
 import 'package:chat_app/resources/storage_methods.dart';
-import 'package:provider/provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -99,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: UniversalVariables.whiteColor,
       appBar: customAppBar(context),
       body: Column(
         children: <Widget>[
@@ -121,8 +122,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   emojiContainer() {
     return EmojiPicker(
-      bgColor: Colors.white,
-      indicatorColor: UniversalVariables.blueColor,
+      bgColor: UniversalVariables.whiteColor,
+      indicatorColor: UniversalVariables.kPrimaryColor,
       rows: 3,
       columns: 7,
       onEmojiSelected: (emoji, category) {
@@ -204,7 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
               BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.65),
           decoration: BoxDecoration(
-            color: UniversalVariables.kPrimaryColor,
+            color: UniversalVariables.kPrimaryColor.withOpacity(0.7),
             borderRadius: BorderRadius.only(
               topLeft: messageRadius,
               topRight: messageRadius,
@@ -234,7 +235,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ? Text(
             message != null ? message.message : "",
             style: TextStyle(
-              color: Colors.white,
+              color: UniversalVariables.blackColor,
               fontSize: 16.0,
             ),
           )
@@ -271,7 +272,7 @@ class _ChatScreenState extends State<ChatScreen> {
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.65),
             decoration: BoxDecoration(
-              color: Colors.black26,
+              color: UniversalVariables.greyColor.withOpacity(0.4),
               borderRadius: BorderRadius.only(
                 bottomRight: messageRadius,
                 topRight: messageRadius,
@@ -287,7 +288,8 @@ class _ChatScreenState extends State<ChatScreen> {
         Container(
           padding: EdgeInsets.all(5),
           child: Text(partTime(message.timestamp),
-              style: TextStyle(color: Colors.white, fontSize: 12)
+              style:
+                  TextStyle(color: UniversalVariables.greyColor, fontSize: 12)
               // message.timestamp.toDate().month.toString()
               ),
         ),
@@ -317,7 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
       showModalBottomSheet(
           context: context,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: UniversalVariables.whiteColor,
           builder: (context) {
             return Column(
               children: <Widget>[
@@ -337,7 +339,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: Text(
                             "PHƯƠNG THỨC GỬI",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: UniversalVariables.blackColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -356,13 +358,21 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () => pickImage(source: ImageSource.gallery),
                       ),
                       ModalTile(
-                          title: "File",
-                          subtitle: "Chọn một file",
-                          icon: Icons.tab),
+                          title: "DeepAR",
+                          subtitle: "Truy cập camera DeepAR",
+                          icon: CupertinoIcons.wand_stars,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FillterScreen()));
+                          }),
                       ModalTile(
-                          title: "Liên Hệ",
-                          subtitle: "Gửi danh thiếp bạn bè",
-                          icon: Icons.contacts_sharp),
+                        title: "Camera",
+                        subtitle: "Truy cập camera",
+                        icon: Icons.camera_alt,
+                        onTap: () => pickImage(source: ImageSource.camera),
+                      ),
                       ModalTile(
                           title: "Vị trí",
                           subtitle: "Chia sẻ vị trí của bạn",
@@ -408,9 +418,8 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.all(10),
       child: Row(
         children: <Widget>[
-          isWriting
-              ? Container
-              : GestureDetector(
+          !isWriting
+              ? GestureDetector(
                   onTap: () => addMediaModal(context),
                   child: Container(
                     padding: EdgeInsets.all(5),
@@ -420,10 +429,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     child: Icon(
                       Icons.add,
-                      color: Colors.white,
+                      color: UniversalVariables.whiteColor,
                     ),
                   ),
-                ),
+                )
+              : Container(),
           SizedBox(
             width: 5,
           ),
@@ -436,29 +446,28 @@ class _ChatScreenState extends State<ChatScreen> {
                   focusNode: textFieldFocus,
                   onTap: () => hideEmojiContainer(),
                   style: TextStyle(
-                    color: Colors.white,
+                    color: UniversalVariables.blackColor,
                   ),
                   onChanged: (val) {
                     (val.length > 0 && val.trim() != "")
                         ? setWritingTo(true)
                         : setWritingTo(false);
                   },
-                  // Input field
                   decoration: InputDecoration(
                     hintText: "Nhập tin nhắn...",
                     hintStyle: TextStyle(
                       color: UniversalVariables.greyColor,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(50.0),
-                      ),
-                      borderSide: BorderSide.none,
-                    ),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(50.0),
+                        ),
+                        borderSide: BorderSide(
+                            color: UniversalVariables.inputColor, width: 0.5)),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     filled: true,
-                    fillColor: UniversalVariables.inputColor,
+                    fillColor: UniversalVariables.whiteColor,
                   ),
                 ),
                 // Icon Smile
@@ -478,55 +487,28 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                   icon: Icon(
                     CupertinoIcons.smiley,
-                    color: UniversalVariables.greyColor,
+                    color: showEmojiPicker
+                        ? UniversalVariables.kPrimaryColor
+                        : UniversalVariables.greyColor,
                   ),
                 ),
               ],
             ),
           ),
-          // Icon to DeepAr
-          isWriting
-              ? Container()
-              : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: GestureDetector(
-                      child: Icon(
-                        CupertinoIcons.wand_stars,
-                        color: UniversalVariables.greyColor,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FillterScreen()));
-                      }),
+          // Send button
+          Container(
+              margin: EdgeInsets.only(left: 10),
+              decoration: BoxDecoration(
+                  color: UniversalVariables.kPrimaryColor,
+                  shape: BoxShape.circle),
+              child: IconButton(
+                icon: Icon(
+                  Icons.send,
+                  size: 15,
+                  color: UniversalVariables.whiteColor,
                 ),
-          // Icon to Camera
-          isWriting
-              ? Container()
-              : GestureDetector(
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: UniversalVariables.greyColor,
-                  ),
-                  onTap: () => pickImage(source: ImageSource.camera),
-                ),
-          // Icon Send
-          isWriting
-              ? Container(
-                  margin: EdgeInsets.only(left: 10),
-                  decoration: BoxDecoration(
-                      color: UniversalVariables.kPrimaryColor,
-                      shape: BoxShape.circle),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.send,
-                      size: 15,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => sendMessage(),
-                  ))
-              : Container()
+                onPressed: () => sendMessage(),
+              ))
         ],
       ),
     );
@@ -545,17 +527,19 @@ class _ChatScreenState extends State<ChatScreen> {
       centerTitle: false,
       title: Text(
         widget.receiver.name,
-        style: TextStyle(fontFamily: UniversalVariables.defaultFont),
       ),
       actions: <Widget>[
         IconButton(
-            icon: Icon(
-              CupertinoIcons.ant,
-              size: 20,
-            ),
-            onPressed: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context)=>ArrCoreScreen()));
-            }),
+          icon: Icon(
+            CupertinoIcons.ant,
+            size: 20,
+            color: UniversalVariables.whiteColor,
+          ),
+          // onPressed: () {
+          //   Navigator.push(context,
+          //       MaterialPageRoute(builder: (context) => ArrCoreScreen()));
+          // }
+        ),
         IconButton(
           icon: Icon(
             CupertinoIcons.video_camera,
@@ -617,12 +601,12 @@ class ModalTile extends StatelessWidget {
           margin: EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: UniversalVariables.receiverColor,
+            color: UniversalVariables.kPrimaryColor,
           ),
           padding: EdgeInsets.all(10),
           child: Icon(
             icon,
-            color: UniversalVariables.greyColor,
+            color: UniversalVariables.whiteColor,
             size: 38,
           ),
         ),
@@ -636,10 +620,10 @@ class ModalTile extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 18,
-              fontFamily: UniversalVariables.defaultFont),
+            fontWeight: FontWeight.bold,
+            color: UniversalVariables.blackColor,
+            fontSize: 18,
+          ),
         ),
       ),
     );

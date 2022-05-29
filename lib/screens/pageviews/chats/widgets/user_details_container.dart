@@ -1,3 +1,4 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/enum/user_state.dart';
@@ -43,7 +44,7 @@ class UserDetailsContainer extends StatelessWidget {
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: UniversalVariables.whiteColor,
               ),
               onPressed: () => Navigator.maybePop(context),
             ),
@@ -54,7 +55,8 @@ class UserDetailsContainer extends StatelessWidget {
                 onPressed: () => signOut(),
                 child: Text(
                   "Sign Out",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                      color: UniversalVariables.whiteColor, fontSize: 12),
                 ),
               )
             ],
@@ -90,13 +92,14 @@ class UserDetailsBody extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
-                  color: Colors.white,
+                  color: UniversalVariables.blackColor,
                 ),
               ),
               SizedBox(height: 10),
               Text(
                 user.email,
-                style: TextStyle(fontSize: 14, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14, color: UniversalVariables.blackColor),
               ),
             ],
           ),
