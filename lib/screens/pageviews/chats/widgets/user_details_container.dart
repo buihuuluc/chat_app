@@ -79,7 +79,7 @@ class UserDetailsBody extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            user.name,
+            user.name != null ? user.name : "null",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
@@ -128,13 +128,13 @@ class UserDetailsBody extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(user.email,
+                  Text(user.email != null ? user.email : "null",
                       style: TextStyle(
                           fontSize: 14,
                           color: UniversalVariables.blackColor,
                           fontFamily: UniversalVariables.defaultFont)),
                   SizedBox(height: 5),
-                  Text(user.username,
+                  Text(user.username != null ? user.username : "null",
                       style: TextStyle(
                           fontSize: 14,
                           color: UniversalVariables.blackColor,
@@ -143,7 +143,7 @@ class UserDetailsBody extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    user.phone,
+                    user.phone != null ? user.phone : "null",
                     style: TextStyle(
                         fontSize: 14,
                         color: UniversalVariables.blackColor,
@@ -190,7 +190,7 @@ class UserDetailsBody extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(user.add,
+                Text(user.add != null ? user.add : "null",
                     style: TextStyle(
                         fontSize: 14,
                         color: UniversalVariables.blackColor,
@@ -198,7 +198,7 @@ class UserDetailsBody extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Text(user.company,
+                Text(user.company != null ? user.company : "null",
                     style: TextStyle(
                         fontSize: 14,
                         color: UniversalVariables.blackColor,
