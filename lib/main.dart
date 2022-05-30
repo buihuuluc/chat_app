@@ -48,21 +48,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// class HomeWidget extends StatelessWidget {
-//   final AuthMethods _authMethods = AuthMethods();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder(
-//       future: _authMethods.getUserDetails(),
-//       builder: (context, AsyncSnapshot<User> snapshot) {
-//         if (snapshot.hasData) {
-//           return HomeScreen();
-//         } else {
-//           return LoginScreen();
-//         }
-//       },
-//     );
-//   }
-// }

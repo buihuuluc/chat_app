@@ -14,7 +14,7 @@ import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/provider/image_upload_provider.dart';
 import 'package:chat_app/resources/auth_methods.dart';
-// import 'package:chat_app/screens/arcore_screen.dart';
+import 'package:chat_app/screens/arcore_screen.dart';
 import 'package:chat_app/screens/chatscreens/filter_screen.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/screens/full_Image.dart';
@@ -375,7 +375,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       ModalTile(
                           title: "ARCore",
                           subtitle: "Mô hình ARCore",
-                          icon: Icons.adb),
+                          icon: Icons.adb,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyApp()));
+                          }),
                       ModalTile(
                           title: "Lịch",
                           subtitle: "Sắp xếp một cuộc gọi và nhận lời nhắc",

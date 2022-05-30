@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/resources/auth_methods.dart';
@@ -35,20 +36,60 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget loginButton() {
-    return Shimmer.fromColors(
-      baseColor: Colors.white,
-      highlightColor: UniversalVariables.senderColor,
-      child: FlatButton(
-        padding: EdgeInsets.all(35),
-        child: Text(
-          "LOGIN",
-          style: TextStyle(
-              fontSize: 35, fontWeight: FontWeight.w900, letterSpacing: 1.2),
+    return Center(
+      child: Stack(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton(
+              child: CachedImage(
+                "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
+                height: 200,
+                width: 200,
+              ),
+              onPressed: () => performLogin(),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Padding(
+                padding: EdgeInsets.all(30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      child: Text(
+                        "Sign in with Google Account",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => performLogin(),
+                    ),
+                  ],
+                ))
+          ],
         ),
-        onPressed: () => performLogin(),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
+      ]),
     );
+    // Shimmer.fromColors(
+    //   baseColor: Colors.white,
+    //   highlightColor: UniversalVariables.senderColor,
+    //   child: FlatButton(
+    //     padding: EdgeInsets.all(35),
+    //     child: CachedImage(
+    //       "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
+    //       height: 50,
+    //       width: 50,
+    //     ),
+    //     onPressed: () => performLogin(),
+    //     // child: Text(
+    //     //   "LOGIN",
+    //     //   style: TextStyle(
+    //     //       fontSize: 35, fontWeight: FontWeight.w900, letterSpacing: 1.2),
+    //     // ),
+    //     // onPressed: () => performLogin(),
+    //     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    //   ),
+    // );
   }
 
   void performLogin() async {
