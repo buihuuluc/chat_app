@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_lists.dart';
 import 'package:emoji_picker/emoji_picker.dart';
@@ -98,23 +99,25 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
 
-    return Scaffold(
-      backgroundColor: UniversalVariables.whiteColor,
-      appBar: customAppBar(context),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            child: messageList(),
-          ),
-          _imageUploadProvider.getViewState == ViewState.LOADING
-              ? Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 15),
-                  child: CircularProgressIndicator())
-              : Container(),
-          chatControls(),
-          showEmojiPicker ? Container(child: emojiContainer()) : Container(),
-        ],
+    return PickupLayout(
+      scaffold: Scaffold(
+        backgroundColor: UniversalVariables.whiteColor,
+        appBar: customAppBar(context),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: messageList(),
+            ),
+            _imageUploadProvider.getViewState == ViewState.LOADING
+                ? Container(
+                    alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(right: 15),
+                    child: CircularProgressIndicator())
+                : Container(),
+            chatControls(),
+            showEmojiPicker ? Container(child: emojiContainer()) : Container(),
+          ],
+        ),
       ),
     );
   }
@@ -538,17 +541,6 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
       actions: <Widget>[
-        // IconButton(
-        //   icon: Icon(
-        //     Icons.adb,
-        //     size: 20,
-        //     color: UniversalVariables.whiteColor,
-        //   ),
-        // onPressed: () {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (context) => ArrCoreScreen()));
-        // }
-        // ),
         IconButton(
           icon: Icon(
             CupertinoIcons.video_camera,
@@ -601,37 +593,39 @@ class ModalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: CustomTile(
-        mini: false,
-        onTap: onTap,
-        leading: Container(
-          margin: EdgeInsets.only(right: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: UniversalVariables.kPrimaryColor,
+    return PickupLayout(
+      scaffold: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: CustomTile(
+          mini: false,
+          onTap: onTap,
+          leading: Container(
+            margin: EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: UniversalVariables.kPrimaryColor,
+            ),
+            padding: EdgeInsets.all(10),
+            child: Icon(
+              icon,
+              color: UniversalVariables.whiteColor,
+              size: 38,
+            ),
           ),
-          padding: EdgeInsets.all(10),
-          child: Icon(
-            icon,
-            color: UniversalVariables.whiteColor,
-            size: 38,
+          subtitle: Text(
+            subtitle,
+            style: TextStyle(
+              color: UniversalVariables.greyColor,
+              fontSize: 14,
+            ),
           ),
-        ),
-        subtitle: Text(
-          subtitle,
-          style: TextStyle(
-            color: UniversalVariables.greyColor,
-            fontSize: 14,
-          ),
-        ),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: UniversalVariables.blackColor,
-            fontSize: 18,
+          title: Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: UniversalVariables.blackColor,
+              fontSize: 18,
+            ),
           ),
         ),
       ),

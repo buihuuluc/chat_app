@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,33 +37,31 @@ class UserDetailsContainer extends StatelessWidget {
       }
     }
 
-    return Container(
-      margin: EdgeInsets.only(top: 16),
-      child: Column(
-        children: <Widget>[
-          CustomAppBar(
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: UniversalVariables.whiteColor,
-              ),
-              onPressed: () => Navigator.maybePop(context),
+    return PickupLayout(
+      scaffold: Scaffold(
+        backgroundColor: UniversalVariables.whiteColor,
+        appBar: CustomAppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: UniversalVariables.whiteColor,
             ),
-            centerTitle: true,
-            title: ShimmeringLogo(),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () => signOut(),
-                child: Text(
-                  "Sign Out",
-                  style: TextStyle(
-                      color: UniversalVariables.whiteColor, fontSize: 15),
-                ),
-              ),
-            ],
+            onPressed: () => Navigator.maybePop(context),
           ),
-          UserDetailsBody(),
-        ],
+          centerTitle: true,
+          title: ShimmeringLogo(),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () => signOut(),
+              child: Text(
+                "Sign Out",
+                style: TextStyle(
+                    color: UniversalVariables.whiteColor, fontSize: 15),
+              ),
+            ),
+          ],
+        ),
+        body: UserDetailsBody(),
       ),
     );
   }
