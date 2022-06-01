@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         autofocus: false,
         controller: emailController,
         keyboardType: TextInputType.emailAddress,
+        cursorColor: UniversalVariables.greyColor,
         validator: (value) {
           if (value.isEmpty) {
             return ("Email không được để trống");
@@ -56,7 +57,10 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
+          prefixIcon: Icon(
+            Icons.mail,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
@@ -68,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordField = TextFormField(
         autofocus: false,
         controller: passwordController,
+        cursorColor: UniversalVariables.greyColor,
         obscureText: true,
         // ignore: missing_return
         validator: (value) {
@@ -84,7 +89,10 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
+          prefixIcon: Icon(
+            Icons.vpn_key,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
@@ -95,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: UniversalVariables.kPrimaryColor,
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
@@ -103,42 +111,47 @@ class _LoginScreenState extends State<LoginScreen> {
             signIn(emailController.text, passwordController.text);
           },
           child: Shimmer.fromColors(
-              baseColor: Colors.white,
-              highlightColor: UniversalVariables.senderColor,
+              baseColor: UniversalVariables.whiteColor,
+              highlightColor: UniversalVariables.kPrimaryColor,
               child: Text(
-                "Login",
+                "Sign in",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: UniversalVariables.kPrimaryColor,
                     fontWeight: FontWeight.bold),
               ))),
-    );
-
-    final textOr = Text(
-      'Or',
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
     );
 
     final loginGoogle = Material(
         elevation: 5,
         borderRadius: BorderRadius.circular(30),
-        color: Colors.redAccent,
-        child: MaterialButton(
-            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            minWidth: MediaQuery.of(context).size.width,
-            onPressed: () => performLogin(),
-            child: Shimmer.fromColors(
-              baseColor: Colors.white,
-              highlightColor: UniversalVariables.senderColor,
-              child: Text(
-                "Login with Google",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1.2),
-              ),
-            )));
+        color: UniversalVariables.kPrimaryColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              "https://play-lh.googleusercontent.com/aFWiT2lTa9CYBpyPjfgfNHd0r5puwKRGj2rHpdPTNrz2N9LXgN_MbLjePd1OTc0E8Rl1",
+              height: 30,
+              width: 30,
+            ),
+            MaterialButton(
+                padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                minWidth: MediaQuery.of(context).size.width / 2,
+                onPressed: () => performLogin(),
+                child: Shimmer.fromColors(
+                  baseColor: UniversalVariables.whiteColor,
+                  highlightColor: UniversalVariables.kPrimaryColor,
+                  child: Text(
+                    "Sign in with Google",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.2),
+                  ),
+                )),
+          ],
+        ));
 
     return Scaffold(
       // backgroundColor: Colors.white,
@@ -166,8 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 35),
                     loginButton,
                     SizedBox(height: 15),
-                    textOr,
-                    SizedBox(height: 15),
                     loginGoogle,
                     SizedBox(height: 15),
                     Row(
@@ -185,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               "Đăng Ký",
                               style: TextStyle(
-                                  color: Colors.redAccent,
+                                  color: UniversalVariables.blueColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),

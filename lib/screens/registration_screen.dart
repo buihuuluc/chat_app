@@ -1,4 +1,6 @@
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/screens/home_screen.dart';
@@ -19,32 +21,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   // string for displaying the error Message
   String errorMessage;
 
-  // String uid;
-  //  String name;
-  //  String email;
-  //  String username;
-  //  String status; // có thể null
-  //  int state;
-  //  String profilePhoto;
-
   // our form key
   final _formKey = GlobalKey<FormState>();
   // editing Controller
   final nameControl = new TextEditingController();
-
+  final companyControl = new TextEditingController();
   final emailControl = new TextEditingController();
-
+  final addControl = new TextEditingController();
   final passwordEditingController = new TextEditingController();
-
+  final phoneControl = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    //first name field
-    final firstNameField = TextFormField(
+    //name field
+    final nameField = TextFormField(
         autofocus: false,
         controller: nameControl,
         keyboardType: TextInputType.name,
+        cursorColor: UniversalVariables.greyColor,
         validator: (value) {
           RegExp regex = new RegExp(r'^.{3,}$');
           if (value.isEmpty) {
@@ -60,19 +55,116 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
+          prefixIcon: Icon(
+            Icons.account_circle,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Nhập tên...",
+          focusColor: UniversalVariables.kPrimaryColor,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
         ));
-
+    //add field
+    final addField = TextFormField(
+        autofocus: false,
+        controller: addControl,
+        keyboardType: TextInputType.streetAddress,
+        cursorColor: UniversalVariables.greyColor,
+        validator: (value) {
+          RegExp regex = new RegExp(r'^.{3,}$');
+          if (value.isEmpty) {
+            return ("Tên không được để trống");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Tên tối thiểu 3 ký tự");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          addControl.text = value;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            CupertinoIcons.location,
+            color: UniversalVariables.kPrimaryColor,
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Nhập địa chỉ...",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+    //company field
+    final companyField = TextFormField(
+        autofocus: false,
+        controller: companyControl,
+        keyboardType: TextInputType.name,
+        cursorColor: UniversalVariables.greyColor,
+        validator: (value) {
+          RegExp regex = new RegExp(r'^.{3,}$');
+          if (value.isEmpty) {
+            return ("Tên không được để trống");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Tên tối thiểu 3 ký tự");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          companyControl.text = value;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.work,
+            color: UniversalVariables.kPrimaryColor,
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Nhập tên công ty...",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+    //phone field
+    final phoneField = TextFormField(
+        autofocus: false,
+        controller: phoneControl,
+        keyboardType: TextInputType.phone,
+        cursorColor: UniversalVariables.greyColor,
+        validator: (value) {
+          RegExp regex = new RegExp(r'^.{3,}$');
+          if (value.isEmpty) {
+            return ("Tên không được để trống");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Tên tối thiểu 3 ký tự");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          phoneControl.text = value;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.phone,
+            color: UniversalVariables.kPrimaryColor,
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Nhập số điện thoại...",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
     //email field
     final emailField = TextFormField(
         autofocus: false,
         controller: emailControl,
         keyboardType: TextInputType.emailAddress,
+        cursorColor: UniversalVariables.greyColor,
         validator: (value) {
           if (value.isEmpty) {
             return ("Vui lòng nhập Email");
@@ -89,7 +181,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
+          prefixIcon: Icon(
+            Icons.mail,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(
@@ -101,6 +196,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final passwordField = TextFormField(
         autofocus: false,
         controller: passwordEditingController,
+        cursorColor: UniversalVariables.greyColor,
         obscureText: true,
         // ignore: missing_return
         validator: (value) {
@@ -117,7 +213,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
+          prefixIcon: Icon(
+            Icons.vpn_key,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
@@ -130,6 +229,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         autofocus: false,
         controller: confirmPasswordEditingController,
         obscureText: true,
+        cursorColor: UniversalVariables.greyColor,
         validator: (value) {
           if (confirmPasswordEditingController.text !=
               passwordEditingController.text) {
@@ -142,7 +242,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
+          prefixIcon: Icon(
+            Icons.vpn_key,
+            color: UniversalVariables.kPrimaryColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(
@@ -154,7 +257,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: UniversalVariables.kPrimaryColor,
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
@@ -175,7 +278,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red),
+          icon: Icon(Icons.arrow_back, color: UniversalVariables.kPrimaryColor),
           onPressed: () {
             // passing this to our root
             Navigator.of(context).pop();
@@ -185,7 +288,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            // color: Colors.white,
+            color: UniversalVariables.whiteColor,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
@@ -201,9 +304,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           fit: BoxFit.contain,
                         )),
                     SizedBox(height: 25),
-                    firstNameField,
+                    nameField,
                     SizedBox(height: 20),
                     emailField,
+                    SizedBox(height: 20),
+                    addField,
+                    SizedBox(height: 20),
+                    companyField,
+                    SizedBox(height: 20),
+                    phoneField,
                     SizedBox(height: 20),
                     passwordField,
                     SizedBox(height: 20),
@@ -272,16 +381,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     User userModel = User();
 
     // Truyền tham số từ form vào biến
-    userModel.uid = user.uid; // Auto id
+    userModel.add = addControl.text;
+    userModel.company = companyControl.text;
+    userModel.uid = user.uid; //Auto generated
     userModel.name = nameControl.text;
     userModel.email = user.email;
+    userModel.phone = phoneControl.text;
     userModel.username = Utils.getUsername(user.email);
-    userModel.status = null;
-    userModel.state = 0;
+    userModel.status = '1';
+    userModel.state = 1;
     userModel.profilePhoto =
         'https://banner2.cleanpng.com/20190123/jtv/kisspng-computer-icons-vector-graphics-person-portable-net-myada-baaranmy-teknik-servis-hizmetleri-5c48d5c2849149.051236271548277186543.jpg';
-    // userModel.firstName = firstNameEditingController.text;
-    // userModel.secondName = secondNameEditingController.text;
 
     await firebaseFirestore
         .collection("users")
