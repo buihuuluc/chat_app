@@ -83,7 +83,7 @@ class UserDetailsBody extends StatelessWidget {
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
-                color: UniversalVariables.blackColor,
+                color: UniversalVariables.lightBlueColor,
                 fontFamily: UniversalVariables.defaultFont),
           ),
           SizedBox(

@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/pageviews/chats/widgets/friend_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/models/contact.dart';
@@ -52,19 +53,21 @@ class ViewLayout extends StatelessWidget {
 
     return CustomTile(
       mini: false,
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(
-              receiver: contact,
-            ),
-          )),
-      title: Text(
-        (contact != null ? contact.name : null) != null ? contact.name : "..",
-        style: TextStyle(
-            color: UniversalVariables.blackColor,
-            fontFamily: UniversalVariables.defaultFont,
-            fontSize: 19),
+      title: GestureDetector(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(
+                receiver: contact,
+              ),
+            )),
+        child: Text(
+          (contact != null ? contact.name : null) != null ? contact.name : "..",
+          style: TextStyle(
+              color: UniversalVariables.blackColor,
+              fontFamily: UniversalVariables.defaultFont,
+              fontSize: 19),
+        ),
       ),
       subtitle: LastMessageContainer(
         stream: _chatMethods.fetchLastMessageBetween(
@@ -76,10 +79,19 @@ class ViewLayout extends StatelessWidget {
         constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
         child: Stack(
           children: <Widget>[
-            CachedImage(
-              contact.profilePhoto,
-              radius: 80,
-              isRound: true,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FriendDetails(
+                      receiver: contact,
+                    ),
+                  )),
+              child: CachedImage(
+                contact.profilePhoto,
+                radius: 80,
+                isRound: true,
+              ),
             ),
             OnlineDotIndicator(
               uid: contact.uid,
