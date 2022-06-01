@@ -265,7 +265,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             signUp(emailControl.text, passwordEditingController.text);
           },
           child: Text(
-            "SignUp",
+            "Đăng ký",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),

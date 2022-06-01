@@ -72,16 +72,16 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordField = TextFormField(
         autofocus: false,
         controller: passwordController,
-        cursorColor: UniversalVariables.greyColor,
         obscureText: true,
         // ignore: missing_return
         validator: (value) {
           RegExp regex = new RegExp(r'^.{6,}$');
+
           if (value.isEmpty) {
             return ("Vui lòng nhập password !");
           }
           if (!regex.hasMatch(value)) {
-            return ("Mật khẩu phả trên 6 ký tự !");
+            return ("Mật khẩu phải trên 6 ký tự !");
           }
         },
         onSaved: (value) {
@@ -89,10 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.vpn_key,
-            color: UniversalVariables.kPrimaryColor,
-          ),
+          prefixIcon: Icon(Icons.vpn_key),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
@@ -100,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
 
-    final loginButton = Material(
+    final signinButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: UniversalVariables.kPrimaryColor,
@@ -114,16 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
               baseColor: UniversalVariables.whiteColor,
               highlightColor: UniversalVariables.kPrimaryColor,
               child: Text(
-                "Sign in",
+                "Đăng nhập",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: UniversalVariables.kPrimaryColor,
                     fontWeight: FontWeight.bold),
               ))),
     );
 
-    final loginGoogle = Material(
+    final signinGoogle = Material(
         elevation: 5,
         borderRadius: BorderRadius.circular(30),
         color: UniversalVariables.kPrimaryColor,
@@ -143,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   baseColor: UniversalVariables.whiteColor,
                   highlightColor: UniversalVariables.kPrimaryColor,
                   child: Text(
-                    "Sign in with Google",
+                    "Đăng nhập với Google",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
@@ -177,9 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 25),
                     passwordField,
                     SizedBox(height: 35),
-                    loginButton,
+                    signinButton,
                     SizedBox(height: 15),
-                    loginGoogle,
+                    signinGoogle,
                     SizedBox(height: 15),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
