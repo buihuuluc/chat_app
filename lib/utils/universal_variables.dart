@@ -13,14 +13,10 @@ class UniversalVariables {
   static final Color gradientColorStart = Color(0xff00b6f3);
   static final Color gradientColorEnd = Color(0xff0184dc);
   static final Color smileEmojiColor = Color(0xFFFFCC00);
-  static final Color senderColor = Color(0xff2b343b);
-  static final Color receiverColor = Color(0xff1e2225);
   static final Color inputColor = Color(0x7366D8A7);
   static const kPrimaryColor = Color(0xFF00BF6D);
-  static const kSecondaryColor = Color(0xFFFE9901);
   static const kContentColorLightTheme = Color(0xFF1D1D35);
   static const kContentColorDarkTheme = Color(0xFFF5FCF9);
-  static const kWarninngColor = Color(0xFFF3BB1C);
   static const kErrorColor = Color(0xFFF03738);
   static const defaultFont = "Times New Roman";
   static final Gradient fabGradient = LinearGradient(
