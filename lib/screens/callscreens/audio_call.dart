@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:chat_app/models/user.dart';
+import 'package:chat_app/resources/auth_methods.dart';
 import 'package:chat_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:chat_app/screens/chatscreens/widgets/cached_image.dart';
 import 'package:chat_app/utils/universal_variables.dart';
@@ -15,9 +17,10 @@ import 'package:chat_app/resources/call_methods.dart';
 
 class AudioScreen extends StatefulWidget {
   final Call call;
-
+  final User receiver;
   AudioScreen({
     @required this.call,
+    this.receiver,
   });
 
   @override
@@ -32,7 +35,9 @@ class _AudioScreenState extends State<AudioScreen> {
   final CallMethods callMethods = CallMethods();
   UserProvider userProvider;
   StreamSubscription callStreamSubscription;
-
+  AuthMethods _authMethods = AuthMethods();
+  String _currentUserId;
+  User sender;
   int seconds = 0;
   int minute = 0;
   int hour = 0;
@@ -49,6 +54,13 @@ class _AudioScreenState extends State<AudioScreen> {
     addPostFrameCallback();
     startTimer();
     joinchanel();
+    _authMethods.getCurrentUser().then((user) {
+      _currentUserId = user.uid;
+      setState(() {
+        sender = User(
+            uid: user.uid, name: user.displayName, profilePhoto: user.photoUrl);
+      });
+    });
   }
 
   //Just added
@@ -69,16 +81,6 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
   @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: UniversalVariables.blackColor,
-  //     body: Center(
-  //       child: Stack(
-  //         children: <Widget>[_audioScreen(), _toolbar()],
-  //       ),
-  //     ),
-  //   );
-  // }
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -105,7 +107,9 @@ class _AudioScreenState extends State<AudioScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            _users == 0 ? widget.call.callerName : widget.call.receiverName,
+            sender.uid != widget.call.callerId
+                ? widget.call.callerName
+                : widget.call.receiverName,
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w600,
@@ -115,7 +119,9 @@ class _AudioScreenState extends State<AudioScreen> {
             height: 50,
           ),
           CachedImage(
-            _users == 0 ? widget.call.callerPic : widget.call.receiverPic,
+            sender.uid != widget.call.callerId
+                ? widget.call.callerPic
+                : widget.call.receiverPic,
             isRound: true,
             radius: 180,
           ),

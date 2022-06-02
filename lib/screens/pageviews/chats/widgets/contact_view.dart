@@ -69,10 +69,19 @@ class ViewLayout extends StatelessWidget {
               fontSize: 19),
         ),
       ),
-      subtitle: LastMessageContainer(
-        stream: _chatMethods.fetchLastMessageBetween(
-          senderId: userProvider.getUser.uid,
-          receiverId: contact.uid,
+      subtitle: GestureDetector(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(
+                receiver: contact,
+              ),
+            )),
+        child: LastMessageContainer(
+          stream: _chatMethods.fetchLastMessageBetween(
+            senderId: userProvider.getUser.uid,
+            receiverId: contact.uid,
+          ),
         ),
       ),
       leading: Container(
