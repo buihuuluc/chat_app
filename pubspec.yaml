@@ -119,7 +119,7 @@ flutter:
   assets:
   - assets/logo/
   - assets/icon/
-  - assets/user_avatar/
+  - assets/3rd_party/
   - assets/call_background/
   # To add assets to your application, add an assets section, like this:
   

@@ -214,40 +214,40 @@ class UserDetailsBody extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: [
-                  Image.network(
-                    "https://www.facebook.com/images/fb_icon_325x325.png",
+                  Image.asset(
+                    "assets/3rd_party/facebook.png",
                     height: 50,
                     width: 50,
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png",
+                  Image.asset(
+                    "assets/3rd_party/instagram.png",
                     height: 50,
                     width: 50,
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Image.network(
-                    "https://freesvg.org/img/1534129544.png",
+                  Image.asset(
+                    "assets/3rd_party/google.png",
                     height: 50,
                     width: 50,
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/2048px-LinkedIn_icon_circle.svg.png",
+                  Image.asset(
+                    "assets/3rd_party/linkedin.png",
                     width: 50,
                     height: 50,
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/1200px-Telegram_2019_Logo.svg.png",
+                  Image.asset(
+                    "assets/3rd_party/telegram.png",
                     height: 50,
                     width: 50,
                   )
