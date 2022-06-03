@@ -534,11 +534,25 @@ class _ChatScreenState extends State<ChatScreen> {
         },
       ),
       centerTitle: false,
-      title: Text(
-        widget.receiver.name,
-        style: TextStyle(
-          fontFamily: UniversalVariables.defaultFont,
-        ),
+      title: Row(
+        children: [
+          CachedImage(
+            widget.receiver.profilePhoto,
+            height: 38,
+            width: 38,
+            isRound: true,
+            radius: 38,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            widget.receiver.name,
+            style: TextStyle(
+              fontFamily: UniversalVariables.defaultFont,
+            ),
+          ),
+        ],
       ),
       actions: <Widget>[
         IconButton(

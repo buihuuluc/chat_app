@@ -140,9 +140,13 @@ class _SearchScreenState extends State<SearchScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Text(
-            'Nickname: ' + searchedUser.name,
-            style: TextStyle(color: UniversalVariables.blueColor),
+          subtitle: Column(
+            children: [
+              Text(
+                'Nickname: ' + searchedUser.name,
+                style: TextStyle(color: UniversalVariables.blueColor),
+              ),
+            ],
           ),
         );
       }),

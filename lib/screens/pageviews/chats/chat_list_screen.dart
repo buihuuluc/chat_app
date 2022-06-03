@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/pageviews/chats/widgets/user_details_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,10 @@ class ChatListScreen extends StatelessWidget {
                 Icons.more_vert,
                 color: UniversalVariables.whiteColor,
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserDetailsContainer())),
             ),
           ],
         ),
@@ -74,7 +78,6 @@ class ChatListContainer extends StatelessWidget {
                 itemCount: docList.length,
                 itemBuilder: (context, index) {
                   Contact contact = Contact.fromMap(docList[index].data);
-
                   return ContactView(contact);
                 },
               );

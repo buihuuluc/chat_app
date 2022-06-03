@@ -26,11 +26,14 @@ class FriendDetails extends StatelessWidget {
               onPressed: () => Navigator.maybePop(context),
             ),
             centerTitle: true,
-            title: Text("Thông tin của " + receiver.name),
+            title: Text(
+              "Thông tin của " + receiver.name,
+              style: TextStyle(fontFamily: UniversalVariables.defaultFont),
+            ),
           ),
           body: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   receiver.name != null ? receiver.name : "null",

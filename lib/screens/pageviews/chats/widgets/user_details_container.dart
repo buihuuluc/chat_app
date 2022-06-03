@@ -74,8 +74,9 @@ class UserDetailsBody extends StatelessWidget {
     final User user = userProvider.getUser;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      margin: EdgeInsets.all(10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             user.name != null ? user.name : "null",
