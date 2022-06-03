@@ -526,8 +526,12 @@ class _ChatScreenState extends State<ChatScreen> {
   CustomAppBar customAppBar(context) {
     return CustomAppBar(
       leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
+        icon: SizedBox(
+          height: 20,
+          width: 20,
+          child: Icon(
+            Icons.arrow_back,
+          ),
         ),
         onPressed: () {
           Navigator.pop(context);
@@ -538,10 +542,10 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           CachedImage(
             widget.receiver.profilePhoto,
-            height: 38,
-            width: 38,
+            height: 40,
+            width: 40,
             isRound: true,
-            radius: 38,
+            radius: 40,
           ),
           SizedBox(
             width: 10,
@@ -549,8 +553,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Text(
             widget.receiver.name,
             style: TextStyle(
-              fontFamily: UniversalVariables.defaultFont,
-            ),
+                fontFamily: UniversalVariables.defaultFont, fontSize: 16),
           ),
         ],
       ),
@@ -569,6 +572,7 @@ class _ChatScreenState extends State<ChatScreen> {
         IconButton(
           icon: Icon(
             CupertinoIcons.phone,
+            size: 25,
           ),
           onPressed: () async =>
               await Permissions.cameraAndMicrophonePermissionsGranted()
@@ -609,12 +613,12 @@ class ModalTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: CustomTile(
           mini: false,
           onTap: onTap,
           leading: Container(
-            margin: EdgeInsets.only(right: 10),
+            margin: EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: UniversalVariables.kPrimaryColor,

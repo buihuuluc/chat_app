@@ -16,12 +16,13 @@ class UserCircle extends StatelessWidget {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     final User user = userProvider.getUser;
     return GestureDetector(
-      onTap: () => showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        backgroundColor: UniversalVariables.whiteColor,
-        builder: (context) => UserDetailsContainer(),
-      ),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => UserDetailsContainer())),
+      // onTap: () => showModalBottomSheet(
+      //   isScrollControlled: true,
+      //   context: context,
+      //   backgroundColor: UniversalVariables.whiteColor,
+      //   builder: (context) => UserDetailsContainer(),
       child: Container(
         height: 44,
         width: 44,
