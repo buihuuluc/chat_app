@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "983901557746",
+    "firebase_url": "https://chatappbdu-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "chatappbdu",
     "storage_bucket": "chatappbdu.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "983901557746-0fbp5q66pjr3pqf90ld0df7nvvo8ck81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app",
+            "certificate_hash": "83313f37d4e1769aa9c8640f223c20723f9341f7"
+          }
+        },
+        {
+          "client_id": "983901557746-4shpp2tl25ndrs7m02qjvojtn8pmqkui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app",
+            "certificate_hash": "88ec8b423eb506becc985301b1f2989b1b64d27e"
+          }
+        },
         {
           "client_id": "983901557746-uh9eiavp8ureq64j4qedjpkqguh8qvtk.apps.googleusercontent.com",
           "client_type": 1,
