@@ -43,7 +43,8 @@ class CustomTile extends StatelessWidget {
                     border: Border(
                         bottom: BorderSide(
                             width: 1,
-                            color: UniversalVariables.separatorColor))),
+                            color: UniversalVariables.lightBlueColor
+                                .withOpacity(0.5)))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
