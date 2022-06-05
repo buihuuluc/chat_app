@@ -15,7 +15,7 @@ class ShimmeringLogo extends StatelessWidget {
       child: Shimmer.fromColors(
         baseColor: Colors.transparent,
         highlightColor: Colors.white,
-        child: Image.asset("assets/logo/new_chat_logo.png"),
+        child: Image.asset("assets/logo/logo.png"),
         period: Duration(seconds: 1),
       ),
     );

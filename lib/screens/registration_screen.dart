@@ -300,7 +300,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     SizedBox(
                         height: 210,
                         child: Image.asset(
-                          "assets/logo/new_chat_Sigup_logo.png",
+                          "assets/logo/signup.png",
                           fit: BoxFit.contain,
                         )),
                     SizedBox(height: 25),
