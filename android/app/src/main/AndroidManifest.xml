@@ -39,12 +39,12 @@
 
 
     <application
-        android:label="chat_app"
+        android:label="BDU Chat"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/LaunchTheme"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
