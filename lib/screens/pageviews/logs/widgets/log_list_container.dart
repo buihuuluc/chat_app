@@ -65,6 +65,7 @@ class _LogListContainerState extends State<LogListContainer> {
           if (logList.isNotEmpty) {
             return ListView.builder(
               itemCount: logList.length,
+              reverse: true,
               itemBuilder: (context, i) {
                 Log _log = logList[i];
                 bool hasDialled = _log.callStatus == CALL_STATUS_DIALLED;
