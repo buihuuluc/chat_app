@@ -273,9 +273,11 @@ class _CallScreenState extends State<CallScreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
                     margin: EdgeInsets.only(top: 10, right: 10),
-                    width: 180,
-                    height: 230,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.height / 3.2,
                     child: Center(
                       child: _renderWidget.first,
                     ),
