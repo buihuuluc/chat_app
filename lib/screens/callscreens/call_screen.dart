@@ -64,20 +64,32 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   backgroundColor: Colors.black,
+    //   body: Container(
+    //     child: Stack(children: <Widget>[
+    //       Column(
+    //         children: [
+    //           Container(
+    //               height: MediaQuery.of(context).size.height,
+    //               width: MediaQuery.of(context).size.width,
+    //               child: _viewColumn()),
+    //         ],
+    //       ),
+    //       _toolbar(),
+    //     ]),
+    //   ),
+    // );
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        child: Stack(children: <Widget>[
-          Column(
-            children: [
-              Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: _viewColumn()),
-            ],
-          ),
-          _toolbar(),
-        ]),
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            _viewColumn(),
+            // _panel(),
+            _toolbar(),
+          ],
+        ),
       ),
     );
   }
@@ -243,18 +255,47 @@ class _CallScreenState extends State<CallScreen> {
   }
 
   Widget _viewColumn() {
-    return Column(
+    return Stack(
       children: <Widget>[
         for (final widget in _renderWidget)
-          Expanded(
-            child: Container(
-              child: widget,
-            ),
-          )
+          if (_renderWidget.length == 1)
+            Expanded(
+              child: Container(
+                child: widget,
+              ),
+            )
+          else if (_renderWidget.length == 2)
+            Stack(
+              children: [
+                Container(
+                  child: widget,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10, right: 10),
+                    width: 180,
+                    height: 230,
+                    child: Center(
+                      child: _renderWidget.first,
+                    ),
+                  ),
+                )
+              ],
+            )
       ],
     );
   }
 
+  Widget getWidget(_renderWidget) {
+    return Expanded(
+      child: Container(
+        child: widget,
+      ),
+    );
+  }
+
+  Widget videoView(view) {}
   Iterable<Widget> get _renderWidget sync* {
     yield AgoraRenderWidget(0, local: true, preview: false);
 
