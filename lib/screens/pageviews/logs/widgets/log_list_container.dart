@@ -71,7 +71,7 @@ class _LogListContainerState extends State<LogListContainer> {
 
                 return CustomTile(
                   leading: CachedImage(
-                    hasDialled ? _log.receiverPic : _log.callerPic,
+                    hasDialled ? _log.callerPic : _log.callerPic,
                     isRound: true,
                     radius: 48,
                   ),

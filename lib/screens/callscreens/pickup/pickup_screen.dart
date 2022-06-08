@@ -68,7 +68,9 @@ class _PickupScreenState extends State<PickupScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                widget.call.callerName,
+                widget.call.callerName != null
+                    ? widget.call.callerName
+                    : "null",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -76,7 +78,7 @@ class _PickupScreenState extends State<PickupScreen> {
               ),
               SizedBox(height: 50),
               CachedImage(
-                widget.call.callerPic,
+                widget.call.callerPic != null ? widget.call.callerPic : "null",
                 isRound: true,
                 radius: 180,
               ),
