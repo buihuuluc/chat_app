@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chat_app/utils/universal_variables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -64,22 +65,6 @@ class _CallScreenState extends State<CallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   backgroundColor: Colors.black,
-    //   body: Container(
-    //     child: Stack(children: <Widget>[
-    //       Column(
-    //         children: [
-    //           Container(
-    //               height: MediaQuery.of(context).size.height,
-    //               width: MediaQuery.of(context).size.width,
-    //               child: _viewColumn()),
-    //         ],
-    //       ),
-    //       _toolbar(),
-    //     ]),
-    //   ),
-    // );
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -274,11 +259,19 @@ class _CallScreenState extends State<CallScreen> {
                   alignment: Alignment.topRight,
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    margin: EdgeInsets.only(top: 10, right: 10),
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: MediaQuery.of(context).size.height / 3.2,
-                    child: Center(
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  UniversalVariables.greyColor.withOpacity(0.5),
+                              spreadRadius: 5)
+                        ]),
+                    margin: EdgeInsets.only(top: 30, right: 10),
+                    // width: 150,
+                    // height: 240,
+                    width: MediaQuery.of(context).size.width / 3,
+                    height: MediaQuery.of(context).size.height / 4,
+                    child: Container(
                       child: _renderWidget.first,
                     ),
                   ),
@@ -286,14 +279,6 @@ class _CallScreenState extends State<CallScreen> {
               ],
             )
       ],
-    );
-  }
-
-  Widget getWidget(_renderWidget) {
-    return Expanded(
-      child: Container(
-        child: widget,
-      ),
     );
   }
 
@@ -314,21 +299,6 @@ class _CallScreenState extends State<CallScreen> {
 
   List<Widget> _getRenderViews() {
     return _sessions.map((session) => session.view).toList();
-  }
-
-  static TextStyle textStyle = TextStyle(fontSize: 18, color: Colors.blue);
-
-  Widget _buildInfoList() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(8.0),
-      itemExtent: 24,
-      itemBuilder: (context, i) {
-        return ListTile(
-          title: Text(_infoStrings[i]),
-        );
-      },
-      itemCount: _infoStrings.length,
-    );
   }
 }
 
