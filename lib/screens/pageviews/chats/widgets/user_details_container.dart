@@ -156,12 +156,12 @@ class UserDetailsBody extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(30),
             child: Container(
-              height: 300,
-              width: 300,
+              height: MediaQuery.of(context).size.height / 3,
+              width: MediaQuery.of(context).size.width / 1.5,
               child: CachedImage(
                 user.profilePhoto,
                 isRound: true,
-                radius: 300,
+                radius: MediaQuery.of(context).size.height / 3,
               ),
             ),
           ),

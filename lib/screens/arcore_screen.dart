@@ -14,13 +14,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Demo ARCore",
-      theme: ThemeData(
-        primaryColor: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
+    // return MaterialApp(
+    //   title: "Demo ARCore",
+    //   theme: ThemeData(
+    //     primaryColor: Colors.blue,
+    //     visualDensity: VisualDensity.adaptivePlatformDensity,
+    //   ),
+    //   home: MyHomePage(),
+    // );
+    return Center(
+      child: MyHomePage(),
     );
   }
 }

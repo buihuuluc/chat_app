@@ -20,11 +20,7 @@ class _LogListContainerState extends State<LogListContainer> {
 
     switch (callStatus) {
       case CALL_STATUS_DIALLED:
-        _icon = Icon(
-          Icons.call_made,
-          size: _iconSize,
-          color: UniversalVariables.kPrimaryColor,
-        );
+        _icon = Icon(Icons.call_made, size: _iconSize, color: Colors.green);
         break;
 
       case CALL_STATUS_MISSED:

@@ -14,7 +14,7 @@ class UniversalVariables {
   static final Color gradientColorEnd = Color(0xff0184dc);
   static final Color smileEmojiColor = Color(0xFFFFCC00);
   static final Color inputColor = Color(0x7366D8A7);
-  static const kPrimaryColor = Color(0xFF00BF6D);
+  static const kPrimaryColor = Color(0xFF0B6BEA);
   static const kContentColorLightTheme = Color(0xFF1D1D35);
   static const kContentColorDarkTheme = Color(0xFFF5FCF9);
   static const kErrorColor = Color(0xFFF03738);
