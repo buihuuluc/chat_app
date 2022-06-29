@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   baseColor: UniversalVariables.whiteColor,
                   highlightColor: UniversalVariables.kPrimaryColor,
                   child: Text(
-                    "Đăng nhập với Google",
+                    "Đăng nhập Google",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,

@@ -21,7 +21,7 @@ class OnlineDotIndicator extends StatelessWidget {
         case UserState.Offline:
           return Colors.red;
         case UserState.Online:
-          return UniversalVariables.kPrimaryColor;
+          return Colors.greenAccent;
         default:
           return Colors.orange;
       }
