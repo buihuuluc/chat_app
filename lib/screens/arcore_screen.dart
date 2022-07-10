@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ArCoreController arCoreController;
-
+  ArCoreNode node;
   void dispose() {
     super.dispose();
     arCoreController.dispose();
@@ -45,17 +45,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _onArCoreViewCreated(ArCoreController controller) {
     arCoreController = controller;
-    _addSphere(arCoreController);
+    arCoreController.onPlaneDetected = _handleOnPlaneDetected;
   }
 
-  _addSphere(ArCoreController controller) {
+  _handleOnPlaneDetected(ArCorePlane plane) {
+    if (node != null) {
+      arCoreController.removeNode(nodeName: node.name);
+    }
+    _addSphere(arCoreController, plane);
+  }
+
+  _addSphere(ArCoreController controller, ArCorePlane plane) {
     final material = ArCoreMaterial(color: Colors.red);
     final sphere = ArCoreSphere(materials: [material], radius: 0.2);
-    final node = ArCoreNode(
+    node = ArCoreNode(
       name: 'Sphere',
       shape: sphere,
-      position: vectors.Vector3(0, -1, -1),
-      rotation: vectors.Vector4(0, 0, 0, 0),
+      position: plane.centerPose.translation,
+      rotation: plane.centerPose.rotation,
     );
     controller.addArCoreNode(node);
   }
@@ -65,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: ArCoreView(
         onArCoreViewCreated: _onArCoreViewCreated,
+        enableUpdateListener: true,
       ),
     );
   }
