@@ -4,18 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/configs/api_keys.dart';
 
-class FillterScreen extends StatefulWidget {
+class FilterScreen extends StatefulWidget {
   @override
   _FillterScreenState createState() => _FillterScreenState();
 }
 
-class _FillterScreenState extends State<FillterScreen> {
+class _FillterScreenState extends State<FilterScreen> {
   CameraDeepArController cameraDeepArController;
   int currentPage = 0;
   // final vp PageController(viewportFraction: .25);
   Effects currentEffects = Effects.none;
   Filters currentFilters = Filters.none;
   Masks currentMask = Masks.none;
+  bool pressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,30 +48,55 @@ class _FillterScreenState extends State<FillterScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 28),
-                    child: Expanded(
-                      child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Colors.black38,
-                                  width: 1,
-                                  style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Icon(
-                            CupertinoIcons.camera,
-                            size: 30,
+                  pressed == false
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 28),
+                          child: Expanded(
+                            child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.black38,
+                                        width: 1,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Icon(
+                                  CupertinoIcons.camera,
+                                  size: 30,
+                                ),
+                                color: Colors.white54,
+                                padding: EdgeInsets.all(15),
+                                onPressed: () {
+                                  if (null == cameraDeepArController) {
+                                    return print('miss');
+                                  }
+                                  cameraDeepArController.snapPhoto();
+                                  pressed = true;
+                                }),
                           ),
-                          color: Colors.white54,
-                          padding: EdgeInsets.all(15),
-                          onPressed: () {
-                            if (null == cameraDeepArController) {
-                              return print('miss');
-                            }
-                            cameraDeepArController.snapPhoto();
-                          }),
-                    ),
-                  ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 28),
+                          child: Expanded(
+                            child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.black38,
+                                        width: 1,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                                color: Colors.green.withOpacity(0.5),
+                                padding: EdgeInsets.all(15),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  pressed = false;
+                                }),
+                          ),
+                        ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(

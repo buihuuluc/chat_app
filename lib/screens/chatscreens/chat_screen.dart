@@ -308,7 +308,7 @@ class _ChatScreenState extends State<ChatScreen> {
         imageUploadProvider: _imageUploadProvider);
   }
 
-  //Widget chatcontrok
+  //Widget chatcontrol
   Widget chatControls() {
     setWritingTo(bool val) {
       setState(() {
@@ -316,7 +316,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     }
 
-    //cấu hình contain thêm các Media vào hội thoại
+    //cấu hình container thêm các Media vào hội thoại
     addMediaModal(context) {
       showModalBottomSheet(
           context: context,
@@ -373,7 +373,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FillterScreen()));
+                                    builder: (context) => FilterScreen()));
                           }),
                       ModalTile(
                           title: "ARCore",
